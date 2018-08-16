@@ -2,13 +2,19 @@ import React from "react";
 import { connect } from "react-redux";
 
 import Button from "@material-ui/core/Button";
-import { logOut } from "../../store/actions";
+import { logOut, createOrder } from "../../store/actions";
 
 const Home = props => (
     <div>
         <p>This is HOME</p>
         <Button
-            fullWidth
+            variant="raised"
+            color="primary"
+            onClick={() => props.createOrder()}
+        >
+            Create Order
+        </Button>
+        <Button
             variant="raised"
             color="primary"
             onClick={() => props.onLogout()}
@@ -18,7 +24,8 @@ const Home = props => (
     </div>
 );
 const mapDispatchToProps = dispatch => ({
-    onLogout: () => dispatch(logOut())
+    onLogout: () => dispatch(logOut()),
+    createOrder: () => dispatch(createOrder())
 });
 
 export default connect(

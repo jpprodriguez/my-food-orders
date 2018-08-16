@@ -1,0 +1,59 @@
+import firebase from "firebase";
+
+import {
+    AUTH_FAIL,
+    AUTH_START,
+    LOGGED_IN,
+    LOGGED_OUT,
+    AUTH_CHECKED
+} from "../actionTypes";
+
+export const authStart = () => ({
+    type: AUTH_START
+});
+
+const loggedOut = () => ({
+    type: LOGGED_OUT
+});
+
+export const loggedIn = user => ({
+    type: LOGGED_IN,
+    user
+});
+
+export const authFail = error => ({
+    type: AUTH_FAIL,
+    error
+});
+
+export const auth = (email, password) => dispatch => {
+    dispatch(authStart());
+    firebase
+        .auth()
+        .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+        .then(() => {
+            firebase
+                .auth()
+                .signInWithEmailAndPassword(email, password)
+                .then(res => {
+                    dispatch(loggedIn(res.user));
+                })
+                .catch(err => {
+                    dispatch(authFail(err));
+                });
+        });
+};
+
+export const authChecked = () => ({
+    type: AUTH_CHECKED
+});
+
+export const logOut = () => dispatch => {
+    firebase
+        .auth()
+        .signOut()
+        .then(() => {
+            dispatch(loggedOut());
+            console.log("user logged out");
+        });
+};

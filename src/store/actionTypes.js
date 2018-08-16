@@ -4,4 +4,5 @@ export const LOGGED_OUT = "LOGGED_OUT";
 export const AUTH_FAIL = "AUTH_FAIL";
 export const AUTH_CHECKED = "AUTH_CHECKED";
 
-export const CREATE_ORDER = "CREATE_ORDER";
+export const ORDER_CREATED = "ORDER_CREATED";
+export const ORDER_CREATION_FAILED = "ORDER_CREATION_FAILED";

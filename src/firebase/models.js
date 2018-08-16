@@ -1,8 +1,4 @@
-export class user {
-    private name;
-    private fileNumber;
-    private isVeggie;
-    private type;
+export class User {
     constructor(name, fileNumber, type, isVeggie) {
         this.name = name;
         this.fileNumber = fileNumber;
@@ -11,3 +7,26 @@ export class user {
     }
 }
 
+export class MenuOption {
+    constructor(category, title, description) {
+        this.category = category;
+        this.title = title;
+        this.description = description;
+    }
+}
+
+export class Order {
+    constructor(
+        mondayOption,
+        tuesdayOption,
+        wednesdayOption,
+        thursdayOption,
+        fridayOption
+    ) {
+        this.mondayOption = mondayOption;
+        this.tuesdayOption = tuesdayOption;
+        this.wednesdayOption = wednesdayOption;
+        this.thursdayOption = thursdayOption;
+        this.fridayOption = fridayOption;
+    }
+}

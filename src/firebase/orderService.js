@@ -1,5 +1,5 @@
-import firebase from "firebase";
-import { getOrderRoute } from "./routes";
+import { getOrderRoute } from "./common/routes";
+import { set, update } from "./common/utils";
 
 export const createOrder = (orderData, user) => {
     const userId = user.uid || null;
@@ -8,10 +8,7 @@ export const createOrder = (orderData, user) => {
     }
     if (userId) {
         const route = getOrderRoute(userId);
-        return firebase
-            .database()
-            .ref(route)
-            .set(orderData);
+        return set(route, orderData);
     } else {
         throw "userID not found";
     }
@@ -24,23 +21,7 @@ export const updateOrder = (changes, user) => {
     }
     if (userId) {
         const route = getOrderRoute(userId);
-        return firebase
-            .database()
-            .ref()
-            .child(route)
-            .update(changes);
-    } else {
-        throw "userID not found";
-    }
-};
-
-export const getUserOrder = () => {
-    const userId = firebase.auth().currentUser.uid || null;
-    if (userId) {
-        return firebase
-            .database()
-            .ref(getOrderRoute(userId))
-            .once("value");
+        return update(route, changes);
     } else {
         throw "userID not found";
     }

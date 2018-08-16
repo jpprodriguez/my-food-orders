@@ -1,2 +1,2 @@
-export { auth, logOut } from "./auth";
-export { createOrder } from "./orders";
+export { auth, loggedIn, logOut, authChecked } from "./auth";
+export { createOrder, orderUpdated, updateOrder } from "./orders";

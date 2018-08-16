@@ -5,8 +5,9 @@ import firebase from "firebase";
 
 import Login from "./containers/Login/Login";
 import "./App.css";
-import { loggedIn, logOut, authChecked } from "./store/actions/auth";
+import { loggedIn, logOut, authChecked, orderUpdated } from "./store/actions";
 import Home from "./containers/Home/Home";
+import { getOrderRoute } from "./firebase/routes";
 
 class App extends Component {
     componentWillMount() {
@@ -16,12 +17,16 @@ class App extends Component {
     checkAuth = self => {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                // User is signed in.
-                self.props.logIn(user);
                 console.log("THE USER IS SIGNED IN");
+                self.props.logIn(user);
+                const ordersRef = firebase
+                    .database()
+                    .ref(getOrderRoute(user.uid));
+                ordersRef.on("value", snapshot => {
+                    self.props.orderUpdated(snapshot.val());
+                });
             } else {
                 console.log("THE USER IS SIGNED OFF");
-                // No user is signed in.
                 self.props.logOut();
             }
             self.props.authChecked();
@@ -53,7 +58,8 @@ class App extends Component {
 const mapDispatchToProps = dispatch => ({
     authChecked: () => dispatch(authChecked()),
     logOut: () => dispatch(logOut()),
-    logIn: user => dispatch(loggedIn(user))
+    logIn: user => dispatch(loggedIn(user)),
+    orderUpdated: order => dispatch(orderUpdated(order))
 });
 const mapStateToProps = state => ({
     wasAuthChecked: state.auth.wasAuthChecked,

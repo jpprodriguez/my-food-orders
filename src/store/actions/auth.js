@@ -18,12 +18,12 @@ const loggedOut = () => ({
 
 export const loggedIn = user => ({
     type: LOGGED_IN,
-    user
+    user: user
 });
 
 export const authFail = error => ({
     type: AUTH_FAIL,
-    error
+    error: error
 });
 
 export const auth = (email, password) => dispatch => {

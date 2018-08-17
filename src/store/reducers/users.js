@@ -1,4 +1,8 @@
-import { USER_RETRIEVED, USER_RETRIEVE_FAILED, RETRIEVING_USER_DATA } from "../actionTypes";
+import {
+    USER_RETRIEVED,
+    USER_RETRIEVE_FAILED,
+    RETRIEVING_USER_DATA
+} from "../actionTypes";
 import { updateObject } from "../../utils/utils";
 
 const initialState = {
@@ -8,11 +12,14 @@ const initialState = {
 };
 
 const userRetrieved = (state, action) =>
-    updateObject(state, { userData: action.userData, retrievalError: null, loading: false });
+    updateObject(state, {
+        userData: action.userData,
+        retrievalError: null,
+        loading: false
+    });
 const userRetrieveFailed = (state, action) =>
     updateObject(state, { retrievalError: action.error, loading: false });
-const retrievingUserData = (state) =>
-    updateObject(state, { loading: true });
+const retrievingUserData = state => updateObject(state, { loading: true });
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {

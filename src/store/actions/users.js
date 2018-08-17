@@ -1,4 +1,8 @@
-import { USER_RETRIEVED, USER_RETRIEVE_FAILED, RETRIEVING_USER_DATA } from "../actionTypes";
+import {
+    USER_RETRIEVED,
+    USER_RETRIEVE_FAILED,
+    RETRIEVING_USER_DATA
+} from "../actionTypes";
 import { getUserData } from "../../firebase/userService";
 
 export const retrieveUserData = user => dispatch => {
@@ -18,7 +22,7 @@ export const retrieveUserData = user => dispatch => {
 
 const retrievingUserData = () => {
     return {
-        type: RETRIEVING_USER_DATA,
+        type: RETRIEVING_USER_DATA
     };
 };
 

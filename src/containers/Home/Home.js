@@ -31,7 +31,9 @@ class Home extends Component {
             <div>
                 <Header
                     title={"Restaurant Orders"}
-                    userName={this.props.userData ? this.props.userData.name : null}
+                    userName={
+                        this.props.userData ? this.props.userData.name : null
+                    }
                     loading={this.props.userDataLoading}
                     onLogoutClick={this.props.onLogout}
                 />
@@ -72,7 +74,7 @@ class Home extends Component {
             </div>
         );
 
-        return (homeUI);
+        return homeUI;
     }
 }
 
@@ -87,7 +89,7 @@ const mapStateToProps = state => ({
     creationError: state.orders.creationError,
     user: state.auth.user,
     userData: state.userData.userData,
-    userDataLoading: state.userData.loading,
+    userDataLoading: state.userData.loading
 });
 
 export default connect(

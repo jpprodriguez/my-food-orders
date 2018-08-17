@@ -22,27 +22,25 @@ const styles = {
         marginRight: 20
     },
     spinner: {
-        color: 'white'
+        color: "white"
     },
     userNameContainer: {
         marginRight: 16,
         minWidth: 128,
-        textAlign: 'center'
+        textAlign: "center"
     }
 };
 
 function ButtonAppBar(props) {
     const { classes } = props;
 
-    const userName = !props.loading ?
-        <Typography
-            variant="subheading"
-            color="inherit"
-        >
+    const userName = !props.loading ? (
+        <Typography variant="subheading" color="inherit">
             {props.userName}
         </Typography>
-        :
+    ) : (
         <CircularProgress className={classes.spinner} size={20} />
+    );
     return (
         <div className={classes.root}>
             <AppBar position="static">
@@ -64,9 +62,7 @@ function ButtonAppBar(props) {
                     >
                         {props.title}
                     </Typography>
-                    <div className={classes.userNameContainer}>
-                        {userName}
-                    </div>
+                    <div className={classes.userNameContainer}>{userName}</div>
                     <Hidden smDown>
                         <Button
                             color="inherit"

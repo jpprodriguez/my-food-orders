@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import { logOut, createOrder, updateOrder } from "../../store/actions";
 import { Order } from "../../firebase/common/models";
+import Header from "../../components/Header/Header";
 
 class Home extends Component {
     render() {
@@ -25,9 +26,15 @@ class Home extends Component {
                 <p>Viernes: {this.props.order.fridayOption}</p>
             </div>
         ) : null;
-        return (
+
+        const homeUI = (
             <div>
-                <p>This is HOME</p>
+                <Header
+                    title={"Restaurant Orders"}
+                    userName={this.props.userData ? this.props.userData.name : null}
+                    loading={this.props.userDataLoading}
+                    onLogoutClick={this.props.onLogout}
+                />
                 <Button
                     variant="raised"
                     color="primary"
@@ -49,24 +56,23 @@ class Home extends Component {
                 >
                     Update Order
                 </Button>
-                <Button
-                    variant="raised"
-                    color="primary"
-                    onClick={() => this.props.onLogout()}
-                >
-                    Logout
-                </Button>
-                <p><strong>My user data</strong></p>
+                <p>
+                    <strong>My user data</strong>
+                </p>
                 {userData}
-                <br/>
-                <p><strong>My orders</strong></p>
+                <br />
+                <p>
+                    <strong>My orders</strong>
+                </p>
                 {orders}
                 {/*<p>Error</p>*/}
                 {/*{this.props.creationError ? (*/}
-                    {/*<p>{this.props.creationError}</p>*/}
+                {/*<p>{this.props.creationError}</p>*/}
                 {/*) : null}*/}
             </div>
         );
+
+        return (homeUI);
     }
 }
 
@@ -80,7 +86,8 @@ const mapStateToProps = state => ({
     order: state.orders.order,
     creationError: state.orders.creationError,
     user: state.auth.user,
-    userData: state.userData.userData
+    userData: state.userData.userData,
+    userDataLoading: state.userData.loading,
 });
 
 export default connect(

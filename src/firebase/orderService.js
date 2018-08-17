@@ -1,5 +1,5 @@
-import {getOrderRoute} from "./common/routes";
-import {set, update} from "./common/utils";
+import { getOrderRoute } from "./common/routes";
+import { set, update } from "./common/utils";
 
 export const createOrder = (orderData, user) => {
     const userId = user.uid || null;

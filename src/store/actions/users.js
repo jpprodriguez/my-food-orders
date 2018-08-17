@@ -1,10 +1,11 @@
-import { USER_RETRIEVED, USER_RETRIEVE_FAILED } from "../actionTypes";
-import {getUserData} from "../../firebase/userService";
+import { USER_RETRIEVED, USER_RETRIEVE_FAILED, RETRIEVING_USER_DATA } from "../actionTypes";
+import { getUserData } from "../../firebase/userService";
 
 export const retrieveUserData = user => dispatch => {
     try {
+        dispatch(retrievingUserData());
         getUserData(user)
-            .then((snapshot) => {
+            .then(snapshot => {
                 dispatch(userDataRetrieved(snapshot.val()));
             })
             .catch(err => {
@@ -15,14 +16,20 @@ export const retrieveUserData = user => dispatch => {
     }
 };
 
-const userDataRetrieved = (userData) => {
+const retrievingUserData = () => {
+    return {
+        type: RETRIEVING_USER_DATA,
+    };
+};
+
+const userDataRetrieved = userData => {
     return {
         type: USER_RETRIEVED,
         userData: userData
     };
 };
 
-const userDataRetrieveFailed = (err) => {
+const userDataRetrieveFailed = err => {
     return {
         type: USER_RETRIEVE_FAILED,
         error: err

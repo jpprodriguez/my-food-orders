@@ -1,5 +1,5 @@
 import firebase from "firebase";
-import {getAllMenusRoute} from "./routes";
+import { getAllMenusRoute } from "./routes";
 
 export class User {
     constructor(name, fileNumber, type, isVeggie) {
@@ -15,7 +15,7 @@ export class MenuOption {
         this.category = category;
         this.title = title;
         this.description = description;
-        this.options = options
+        this.options = options;
     }
 }
 
@@ -25,7 +25,6 @@ export class MenuDetail {
         this.value = value;
     }
 }
-
 
 export class Order {
     constructor(

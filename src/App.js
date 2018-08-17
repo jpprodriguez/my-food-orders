@@ -5,7 +5,13 @@ import firebase from "firebase";
 
 import Login from "./containers/Login/Login";
 import "./App.css";
-import {loggedIn, logOut, authChecked, orderUpdated, retrieveUserData} from "./store/actions";
+import {
+    loggedIn,
+    logOut,
+    authChecked,
+    orderUpdated,
+    retrieveUserData
+} from "./store/actions";
 import Home from "./containers/Home/Home";
 import { getOrderRoute } from "./firebase/common/routes";
 import { getRef } from "./firebase/common/utils";
@@ -64,7 +70,7 @@ const mapDispatchToProps = dispatch => ({
     logOut: () => dispatch(logOut()),
     logIn: user => dispatch(loggedIn(user)),
     orderUpdated: order => dispatch(orderUpdated(order)),
-    getUserData: (user) => dispatch(retrieveUserData(user))
+    getUserData: user => dispatch(retrieveUserData(user))
 });
 const mapStateToProps = state => ({
     wasAuthChecked: state.auth.wasAuthChecked,

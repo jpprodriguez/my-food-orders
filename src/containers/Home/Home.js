@@ -18,11 +18,11 @@ class Home extends Component {
         ) : null;
         const orders = this.props.order ? (
             <div>
-                <p>{this.props.order.mondayOption}</p>
-                <p>{this.props.order.tuesdayOption}</p>
-                <p>{this.props.order.wednesdayOption}</p>
-                <p>{this.props.order.thursdayOption}</p>
-                <p>{this.props.order.fridayOption}</p>
+                <p>Lunes: {this.props.order.mondayOption}</p>
+                <p>Martes: {this.props.order.tuesdayOption}</p>
+                <p>Miercoles: {this.props.order.wednesdayOption}</p>
+                <p>Jueves: {this.props.order.thursdayOption}</p>
+                <p>Viernes: {this.props.order.fridayOption}</p>
             </div>
         ) : null;
         return (
@@ -56,16 +56,15 @@ class Home extends Component {
                 >
                     Logout
                 </Button>
-                <p>My user data</p>
+                <p><strong>My user data</strong></p>
                 {userData}
-                <p>My orders</p>
+                <br/>
+                <p><strong>My orders</strong></p>
                 {orders}
-                <p>Error</p>
-
-
-                {this.props.creationError ? (
-                    <p>{this.props.creationError}</p>
-                ) : null}
+                {/*<p>Error</p>*/}
+                {/*{this.props.creationError ? (*/}
+                    {/*<p>{this.props.creationError}</p>*/}
+                {/*) : null}*/}
             </div>
         );
     }

@@ -3,8 +3,9 @@ import { connect } from "react-redux";
 
 import Button from "@material-ui/core/Button";
 import { logOut, createOrder, updateOrder } from "../../store/actions";
-import { Order } from "../../firebase/common/models";
+import {initMenus, Order} from "../../firebase/common/models";
 import Header from "../../components/Header/Header";
+import CustomerMenu from "../customerMenu/customerMenu";
 
 class Home extends Component {
     render() {
@@ -37,11 +38,21 @@ class Home extends Component {
                     loading={this.props.userDataLoading}
                     onLogoutClick={this.props.onLogout}
                 />
+                <CustomerMenu
+                    days={[
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday"
+                    ]}
+                />
                 <Button
                     variant="raised"
                     color="primary"
                     onClick={() =>
                         this.props.createOrder(mockOrder, this.props.user)
+                        // initMenus()
                     }
                 >
                     Create Order

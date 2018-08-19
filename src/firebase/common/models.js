@@ -50,13 +50,7 @@ export const menuCategories = Object.freeze({
     vegan: "vegan"
 });
 
-export const days = Object.freeze({
-    monday: "monday",
-    tuesday: "tuesday",
-    wednesday: "wednesday",
-    thursday: "thursday",
-    friday: "friday"
-});
+export const days = Object.freeze(["monday","tuesday","wednesday","thursday","friday"]);
 
 // export const initCurrentMenus = () => {
 //     let currentMenus = {};
@@ -69,35 +63,32 @@ export const days = Object.freeze({
 //     return currentMenus;
 // };
 
-// export const initMenus = (refs) => {
-//     let ref = firebase.database().ref().child('all_menus/menu');
-//     ref.push().set(new MenuOption(menuCategories.menu,
-//         'Brochette de pollo',
-//         'Brochette de pollo y vegetales marinada, puré de batata.',
-//         new MenuDetail('con verdes', false)));
-//
-//     ref.push().set(new MenuOption(menuCategories.menu,
-//         'Guiso de lentejas',
-//         'Guiso de lentejas calentito y riquito',
-//         new MenuDetail('extra picante', true)));
-//
-//      ref = firebase.database().ref().child('all_menus/sandwich');
-//     ref.push().set(new MenuOption(menuCategories.sandwich,
-//         'Chicken Burger',
-//         'Chicken burger, lechuga, tomate y queso con papas.',
-//         new MenuDetail('sin papas', true)));
-//
-//      ref = firebase.database().ref().child('all_menus/salad');
-//
-//     ref.push().set(new MenuOption(menuCategories.salad,
-//         'Cesar',
-//         'Queso, verdes, cherrys, pollo, croutons y aderezo',
-//         new MenuDetail('sin croutons', false)));
-//
-//      ref = firebase.database().ref().child('all_menus/pasta');
-//
-//     ref.push().set(new MenuOption(menuCategories.pasta,
-//         'Pasta',
-//         'Una rica y sabrosa pastita',
-//         new MenuDetail('con crema', true)));
-// };
+export const initMenus = () => {
+    let ref = firebase.database().ref().child('all_menus');
+    ref.push().set(new MenuOption(menuCategories.menu,
+        'Brochette de pollo',
+        'Brochette de pollo y vegetales marinada, puré de batata.',
+        ['con verdes', 'con salsa']));
+
+    ref.push().set(new MenuOption(menuCategories.menu,
+        'Guiso de lentejas',
+        'Guiso de lentejas calentito y riquito',
+        ['extra picante']));
+
+    ref.push().set(new MenuOption(menuCategories.sandwich,
+        'Chicken Burger',
+        'Chicken burger, lechuga, tomate y queso con papas.',
+        ['sin papas']));
+
+
+    ref.push().set(new MenuOption(menuCategories.salad,
+        'Cesar',
+        'Queso, verdes, cherrys, pollo, croutons y aderezo',
+        ['sin croutons']));
+
+
+    ref.push().set(new MenuOption(menuCategories.pasta,
+        'Pasta',
+        'Una rica y sabrosa pastita',
+        ['con crema']));
+};

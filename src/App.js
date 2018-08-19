@@ -21,6 +21,11 @@ class App extends Component {
     componentWillMount() {
         this.checkAuth(this);
     }
+    componentWillUnMount() {
+        if (this.ordersRef) {
+            this.ordersRef.off();
+        }
+    }
 
     checkAuth = self => {
         firebase.auth().onAuthStateChanged(user => {

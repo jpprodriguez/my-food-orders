@@ -7,8 +7,12 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import Hidden from "@material-ui/core/es/Hidden/Hidden";
-import CircularProgress from "@material-ui/core/es/CircularProgress/CircularProgress";
+import Hidden from "@material-ui/core/Hidden/Hidden";
+import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
+import withWidth, {
+    isWidthDown,
+    isWidthUp
+} from "@material-ui/core/withWidth/withWidth";
 
 const styles = {
     root: {
@@ -35,7 +39,10 @@ function ButtonAppBar(props) {
     const { classes } = props;
 
     const userName = !props.loading ? (
-        <Typography variant="subheading" color="inherit">
+        <Typography
+            variant={isWidthUp("sm", props.width) ? "subheading" : "body1"}
+            color="inherit"
+        >
             {props.userName}
         </Typography>
     ) : (
@@ -56,7 +63,11 @@ function ButtonAppBar(props) {
                         </IconButton>
                     </Hidden>
                     <Typography
-                        variant="title"
+                        variant={
+                            isWidthUp("sm", props.width)
+                                ? "title"
+                                : "subheading"
+                        }
                         color="inherit"
                         className={classes.flex}
                     >
@@ -81,4 +92,4 @@ ButtonAppBar.propTypes = {
     classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ButtonAppBar);
+export default withWidth()(withStyles(styles)(ButtonAppBar));

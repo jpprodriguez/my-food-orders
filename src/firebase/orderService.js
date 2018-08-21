@@ -27,6 +27,22 @@ export const updateOrder = (changes, user) => {
     }
 };
 
+export const updateOrderFromDay = (changes, day, user) => {
+    const userId = user.uid || null;
+    if (!changes) {
+        throw "No data to update";
+    }
+    if (!day) {
+        throw "No day provided";
+    }
+    if (userId) {
+        const route = getOrderByDateRoute(userId, day);
+        return update(route, changes);
+    } else {
+        throw "userID not found";
+    }
+};
+
 export const getOrderByDayRef = (day, user) => {
     const userId = user.uid || null;
     if (!day) {

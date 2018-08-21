@@ -162,6 +162,10 @@ class RecipeReviewCard extends React.Component {
                             <CheckboxList
                                 list={this.state.menu.options}
                                 selectedOptions={this.props.options}
+                                disabled={!this.props.selected}
+                                onOptionSelected={item =>
+                                    this.props.onMenuDetailSelected(item)
+                                }
                             />
                         ) : null}
                     </CardContent>

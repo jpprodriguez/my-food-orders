@@ -39,12 +39,7 @@ class Home extends Component {
                 <Button
                     variant="raised"
                     color="primary"
-                    onClick={() =>
-                        this.props.updateOrder(
-                            {},
-                            this.props.user
-                        )
-                    }
+                    onClick={() => this.props.updateOrder({}, this.props.user)}
                 >
                     Update Order
                 </Button>

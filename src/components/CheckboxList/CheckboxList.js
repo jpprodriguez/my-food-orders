@@ -7,26 +7,31 @@ import ListItemText from "@material-ui/core/es/ListItemText/ListItemText";
 const CheckboxList = props => {
     return (
         <List>
-            {props.list.map(item => (
-                <ListItem
-                    key={item}
-                    role={undefined}
-                    dense
-                    button
-                    // onClick={this.handleToggle(value)}
-                    // className={classes.listItem}
-                >
-                    <Checkbox
-                        checked={
-                            props.selectedOptions &&
-                            props.selectedOptions.indexOf(item) !== -1
-                        }
-                        tabIndex={-1}
-                        disableRipple
-                    />
-                    <ListItemText primary={item} />
-                </ListItem>
-            ))}
+            {props.list.map(item => {
+                const checked = !!(
+                    props.selectedOptions &&
+                    props.selectedOptions.length > 0 &&
+                    props.selectedOptions.indexOf(item) !== -1
+                );
+                return (
+                    <ListItem
+                        key={item}
+                        role={undefined}
+                        dense
+                        button
+                        disabled={props.disabled}
+                        onClick={() => props.onOptionSelected(item)}
+                    >
+                        <Checkbox
+                            checked={checked}
+                            value="checked"
+                            tabIndex={-1}
+                            disableRipple
+                        />
+                        <ListItemText primary={item} />
+                    </ListItem>
+                );
+            })}
         </List>
     );
 };

@@ -7,7 +7,8 @@ import {
 } from "../actionTypes";
 import {
     createOrder as createOrderInFirebase,
-    updateOrder as updateOrderInFirebase
+    updateOrder as updateOrderInFirebase,
+    updateOrderFromDay as updateOrderFromDayInFirebase
 } from "../../firebase/orderService";
 
 export const createOrder = (orderData, user) => dispatch => {
@@ -27,6 +28,20 @@ export const createOrder = (orderData, user) => dispatch => {
 export const updateOrder = (changes, user) => dispatch => {
     try {
         updateOrderInFirebase(changes, user)
+            .then(() => {
+                dispatch(orderUpdateSuccess());
+            })
+            .catch(err => {
+                dispatch(orderUpdateFailed(err));
+            });
+    } catch (err) {
+        dispatch(orderUpdateFailed(err));
+    }
+};
+
+export const updateOrderFromDay = (changes, day, user) => dispatch => {
+    try {
+        updateOrderFromDayInFirebase(changes, day, user)
             .then(() => {
                 dispatch(orderUpdateSuccess());
             })

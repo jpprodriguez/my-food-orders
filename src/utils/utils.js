@@ -10,3 +10,13 @@ export const objectToArray = obj => {
 export const objectWithKeysToArray = obj => {
     return obj ? Object.keys(obj).map(i => [i, obj[i]]) : null;
 };
+
+export const getArrayWithoutItem = (array, itemToRemove) => {
+    let newArray = [];
+    for (let item of array) {
+        if (item !== itemToRemove) {
+            newArray.push(item);
+        }
+    }
+    return newArray;
+};

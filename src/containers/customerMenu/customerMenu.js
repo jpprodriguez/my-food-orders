@@ -50,7 +50,7 @@ class CustomerMenu extends Component {
         });
     }
     componentWillUnmount() {
-        if (this.currentMenuRef.hasOwnProperty('off')) {
+        if (this.currentMenuRef.hasOwnProperty("off")) {
             this.currentMenuRef.off();
         }
     }
@@ -58,8 +58,17 @@ class CustomerMenu extends Component {
     render() {
         const { classes } = this.props;
         const days = daysModel;
-        const menuExpPanels = this.props.currentMenu ?
-            days.map(day => this.props.currentMenu[day] ? <MenuPanel key={day} day={day} menues={this.props.currentMenu[day]}/> : null)
+        const menuExpPanels = this.props.currentMenu
+            ? days.map(
+                  day =>
+                      this.props.currentMenu[day] ? (
+                          <MenuPanel
+                              key={day}
+                              day={day}
+                              menues={this.props.currentMenu[day]}
+                          />
+                      ) : null
+              )
             : null;
         const dates = this.props.dates ? (
             <Typography

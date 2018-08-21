@@ -2,29 +2,18 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import Button from "@material-ui/core/Button";
-import { logOut, createOrder, updateOrder } from "../../store/actions";
-import {initMenus, Order} from "../../firebase/common/models";
 import Header from "../../components/Header/Header";
 import CustomerMenu from "../customerMenu/customerMenu";
+import { createOrder, logOut, updateOrder } from "../../store/actions";
 
 class Home extends Component {
     render() {
-        const mockOrder = new Order("menu", "pasta", "wfh", "sandwich", "menu");
         const userData = this.props.userData ? (
             <div>
                 <p>{this.props.userData.name}</p>
                 <p>{this.props.userData.fileNumber}</p>
                 <p>{this.props.userData.type}</p>
                 <p>{this.props.userData.isVeggie.toString()}</p>
-            </div>
-        ) : null;
-        const orders = this.props.order ? (
-            <div>
-                <p>Lunes: {this.props.order.mondayOption}</p>
-                <p>Martes: {this.props.order.tuesdayOption}</p>
-                <p>Miercoles: {this.props.order.wednesdayOption}</p>
-                <p>Jueves: {this.props.order.thursdayOption}</p>
-                <p>Viernes: {this.props.order.fridayOption}</p>
             </div>
         ) : null;
 
@@ -51,18 +40,8 @@ class Home extends Component {
                     variant="raised"
                     color="primary"
                     onClick={() =>
-                        this.props.createOrder(mockOrder, this.props.user)
-                        // initMenus()
-                    }
-                >
-                    Create Order
-                </Button>
-                <Button
-                    variant="raised"
-                    color="primary"
-                    onClick={() =>
                         this.props.updateOrder(
-                            { mondayOption: "wfh" },
+                            {},
                             this.props.user
                         )
                     }
@@ -74,14 +53,6 @@ class Home extends Component {
                 </p>
                 {userData}
                 <br />
-                <p>
-                    <strong>My orders</strong>
-                </p>
-                {orders}
-                {/*<p>Error</p>*/}
-                {/*{this.props.creationError ? (*/}
-                {/*<p>{this.props.creationError}</p>*/}
-                {/*) : null}*/}
             </div>
         );
 

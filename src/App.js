@@ -13,18 +13,13 @@ import {
     retrieveUserData
 } from "./store/actions";
 import Home from "./containers/Home/Home";
-import { getOrderRoute } from "./firebase/common/routes";
+import { getOrdersRoute } from "./firebase/common/routes";
 import { getRef } from "./firebase/common/utils";
 
 class App extends Component {
     ordersRef = null;
     componentWillMount() {
         this.checkAuth(this);
-    }
-    componentWillUnMount() {
-        if (this.ordersRef) {
-            this.ordersRef.off();
-        }
     }
 
     checkAuth = self => {
@@ -33,7 +28,7 @@ class App extends Component {
                 console.log("THE USER IS SIGNED IN");
                 self.props.logIn(user);
                 self.props.getUserData(user);
-                this.ordersRef = getRef(getOrderRoute(user.uid));
+                this.ordersRef = getRef(getOrdersRoute(user.uid));
                 this.ordersRef.on("value", snapshot => {
                     self.props.orderUpdated(snapshot.val());
                 });

@@ -15,7 +15,7 @@ import red from "@material-ui/core/colors/red";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteEmptyIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import ShoppingCartEmptyIcon from "@material-ui/icons/ShoppingCartOutlined"
+import ShoppingCartEmptyIcon from "@material-ui/icons/ShoppingCartOutlined";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { getMenuByIdRef } from "../../firebase/MenuService";
@@ -23,11 +23,11 @@ import Aux from "../../hoc/Aux/Aux";
 import pink from "@material-ui/core/colors/pink";
 import green from "@material-ui/core/colors/green";
 import Checkbox from "@material-ui/core/Checkbox/Checkbox";
+import CheckboxList from "../CheckboxList/CheckboxList";
+import { getOrderByDayRef } from "../../firebase/orderService";
 
 const styles = theme => ({
-    root: {
-
-    },
+    root: {},
     card: {
         maxWidth: 400
     },
@@ -68,7 +68,7 @@ const styles = theme => ({
 });
 
 class RecipeReviewCard extends React.Component {
-    state = { expanded: false, menu: null, isFavorite: false };
+    state = { expanded: false, menu: null, isFavorite: false, order: null };
     menuByIdRef = null;
 
     componentDidMount() {
@@ -80,7 +80,7 @@ class RecipeReviewCard extends React.Component {
         );
     }
     componentWillUnmount() {
-        if (this.menuByIdRef.hasOwnProperty('off')) {
+        if (this.menuByIdRef.hasOwnProperty("off")) {
             this.menuByIdRef.off();
         }
     }
@@ -90,7 +90,16 @@ class RecipeReviewCard extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const favoriteIcon = this.state.isFavorite ? <FavoriteIcon className={classes.favoriteIcon}/> : <FavoriteEmptyIcon className={classes.favoriteIcon}/>
+        const favoriteIcon = this.state.isFavorite ? (
+            <FavoriteIcon className={classes.favoriteIcon} />
+        ) : (
+            <FavoriteEmptyIcon className={classes.favoriteIcon} />
+        );
+        const shoppingCartIcon = this.props.selected ? (
+            <ShoppingCartIcon className={classes.shopCartIcon} />
+        ) : (
+            <ShoppingCartEmptyIcon className={classes.shopCartIcon} />
+        );
         const cardContent = this.state.menu ? (
             <Aux className={classes.root}>
                 <CardHeader
@@ -119,9 +128,14 @@ class RecipeReviewCard extends React.Component {
                 </CardContent>
                 <CardActions className={classes.actions} disableActionSpacing>
                     <IconButton aria-label="Add to favorites">
-                        <ShoppingCartEmptyIcon className={classes.shopCartIcon}/>
+                        {shoppingCartIcon}
                     </IconButton>
-                    <IconButton aria-label="Add to favorites" onClick={() => {this.onFavoriteButtonClicked()}}>
+                    <IconButton
+                        aria-label="Add to favorites"
+                        onClick={() => {
+                            this.onFavoriteButtonClicked();
+                        }}
+                    >
                         {favoriteIcon}
                     </IconButton>
                     <Typography
@@ -144,26 +158,21 @@ class RecipeReviewCard extends React.Component {
 
                 <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
                     <CardContent>
-                        <Typography component="p">
-                            {this.state.menu.description}
-                        </Typography>
-                        {/*<Checkbox*/}
-                            {/*checked={this.state.checkedG}*/}
-                            {/*onChange={this.handleChange('checkedG')}*/}
-                            {/*value="checkedG"*/}
-                            {/*color="primary"*/}
-                        {/*/>*/}
+                        {this.state.menu.options ? (
+                            <CheckboxList
+                                list={this.state.menu.options}
+                                selectedOptions={this.props.options}
+                            />
+                        ) : null}
                     </CardContent>
                 </Collapse>
             </Aux>
         ) : null;
-        return (
-            <Card className={classes.card}>{cardContent}</Card>
-        );
+        return <Card className={classes.card}>{cardContent}</Card>;
     }
     onFavoriteButtonClicked = () => {
-        this.setState(state => ({isFavorite: !state.isFavorite}));
-    }
+        this.setState(state => ({ isFavorite: !state.isFavorite }));
+    };
 }
 
 RecipeReviewCard.propTypes = {

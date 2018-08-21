@@ -96,9 +96,9 @@ class RecipeReviewCard extends React.Component {
             <FavoriteEmptyIcon className={classes.favoriteIcon} />
         );
         const shoppingCartIcon = this.props.selected ? (
-            <ShoppingCartIcon className={classes.shopCartIcon} />
+            <ShoppingCartIcon className={classes.shopCartIcon} onClick={() => this.props.onMenuRemoved() }/>
         ) : (
-            <ShoppingCartEmptyIcon className={classes.shopCartIcon} />
+            <ShoppingCartEmptyIcon className={classes.shopCartIcon} onClick={() => this.props.onMenuSelected() }/>
         );
         const cardContent = this.state.menu ? (
             <Aux className={classes.root}>

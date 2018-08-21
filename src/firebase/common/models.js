@@ -28,8 +28,8 @@ export class MenuDetail {
 
 export class Order {
     constructor(menuId, menuDetails) {
-        this.menuId = menuId;
-        this.menuDetails = menuDetails;
+        this.id = menuId;
+        this.options = menuDetails;
     }
 }
 

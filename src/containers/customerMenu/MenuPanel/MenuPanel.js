@@ -4,6 +4,7 @@ import MenuCard from "../../../components/MenuCard/MenuCard";
 import { connect } from "react-redux";
 import { updateOrderFromDay } from "../../../store/actions";
 import { getArrayWithoutItem } from "../../../utils/utils";
+import {Order} from "../../../firebase/common/models";
 
 const MenuPanel = props => {
     const menuCards = props.menues.map(menuId => (
@@ -25,10 +26,17 @@ const MenuPanel = props => {
             onMenuDetailSelected={item =>
                 handleMenuDetailSelection(item, props)
             }
+            onMenuSelected ={() => handleMenuSelection(menuId, props)}
+            onMenuRemoved ={() => handleMenuSelection(null, props)}
         />
     ));
 
     return <MenuExpansionPanel day={props.day}>{menuCards}</MenuExpansionPanel>;
+};
+
+const handleMenuSelection = (menuId, props) => {
+    let updatedOrder = new Order(menuId,[]);
+    props.updateOrderFromDay(updatedOrder, props.day, props.user);
 };
 
 const handleMenuDetailSelection = (item, props) => {

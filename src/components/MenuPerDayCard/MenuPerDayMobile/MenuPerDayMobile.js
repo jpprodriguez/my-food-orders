@@ -8,7 +8,13 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 const styles = {
     panelDetails: {
-        flexDirection: "column"
+        // flexDirection: "column"
+        flexWrap: "wrap",
+        justifyContent: "center"
+    },
+    title: {
+        textTransform: "capitalize",
+        fontWeight: 500
     }
 };
 
@@ -17,7 +23,13 @@ const MenuExpansionPanel = props => {
     return (
         <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>{props.day}</Typography>
+                <Typography
+                    className={classes.title}
+                    variant={"subheading"}
+                    component={"span"}
+                >
+                    {props.day}
+                </Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails className={classes.panelDetails}>
                 {props.children}

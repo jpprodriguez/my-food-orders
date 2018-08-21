@@ -4,38 +4,49 @@ import MenuCard from "../../../components/MenuCard/MenuCard";
 import { connect } from "react-redux";
 import { updateOrderFromDay } from "../../../store/actions";
 import { getArrayWithoutItem } from "../../../utils/utils";
-import {Order} from "../../../firebase/common/models";
+import { Order } from "../../../firebase/common/models";
+import Paper from "@material-ui/core/Paper/Paper";
+import withStyles from "@material-ui/core/styles/withStyles";
+import MenuPerDayCard from "../../../components/MenuPerDayCard/MenuPerDayCard";
+
+const styles = theme => ({
+    menuCard: {
+        margin: "0 16px 16px 0px"
+    }
+});
 
 const MenuPanel = props => {
+    const { classes } = props;
     const menuCards = props.menues.map(menuId => (
-        <MenuCard
-            key={menuId}
-            menuId={menuId}
-            selected={
-                props.orders &&
-                props.orders[props.day] &&
-                props.orders[props.day].id === menuId
-            }
-            options={
-                props.orders &&
-                props.orders[props.day] &&
-                props.orders[props.day].options
-                    ? props.orders[props.day].options
-                    : null
-            }
-            onMenuDetailSelected={item =>
-                handleMenuDetailSelection(item, props)
-            }
-            onMenuSelected ={() => handleMenuSelection(menuId, props)}
-            onMenuRemoved ={() => handleMenuSelection(null, props)}
-        />
+        <div className={classes.menuCard} key={menuId}>
+            <MenuCard
+                menuId={menuId}
+                selected={
+                    props.orders &&
+                    props.orders[props.day] &&
+                    props.orders[props.day].id === menuId
+                }
+                options={
+                    props.orders &&
+                    props.orders[props.day] &&
+                    props.orders[props.day].options
+                        ? props.orders[props.day].options
+                        : null
+                }
+                onMenuDetailSelected={item =>
+                    handleMenuDetailSelection(item, props)
+                }
+                onMenuSelected={() => handleMenuSelection(menuId, props)}
+                onMenuRemoved={() => handleMenuSelection(null, props)}
+            />
+        </div>
     ));
 
-    return <MenuExpansionPanel day={props.day}>{menuCards}</MenuExpansionPanel>;
+    return <MenuPerDayCard day={props.day}>{menuCards}</MenuPerDayCard>;
 };
 
 const handleMenuSelection = (menuId, props) => {
-    let updatedOrder = new Order(menuId,[]);
+    let updatedOrder = new Order(menuId, []);
     props.updateOrderFromDay(updatedOrder, props.day, props.user);
 };
 
@@ -75,4 +86,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(MenuPanel);
+)(withStyles(styles)(MenuPanel));

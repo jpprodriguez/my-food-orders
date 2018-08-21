@@ -29,7 +29,7 @@ import { getOrderByDayRef } from "../../firebase/orderService";
 const styles = theme => ({
     root: {},
     card: {
-        maxWidth: 400
+        width: 300
     },
     cardSelected: {
         boxShadow: "0px 0px 1px 3px #37ca8e"
@@ -40,6 +40,13 @@ const styles = theme => ({
     },
     actions: {
         display: "flex"
+    },
+    description: {
+        height: 30,
+        [theme.breakpoints.up("sm")]: {
+            height: 60
+        },
+        overflow: "auto"
     },
     expand: {
         transform: "rotate(0deg)",
@@ -55,6 +62,9 @@ const styles = theme => ({
     },
     expandOpen: {
         transform: "rotate(180deg)"
+    },
+    title: {
+        textTransform: "capitalize"
     },
     avatar: {
         backgroundColor: red[500]
@@ -96,33 +106,36 @@ class RecipeReviewCard extends React.Component {
             <FavoriteEmptyIcon className={classes.favoriteIcon} />
         );
         const shoppingCartIcon = this.props.selected ? (
-            <ShoppingCartIcon className={classes.shopCartIcon} onClick={() => this.props.onMenuRemoved() }/>
+            <ShoppingCartIcon
+                className={classes.shopCartIcon}
+                onClick={() => this.props.onMenuRemoved()}
+            />
         ) : (
-            <ShoppingCartEmptyIcon className={classes.shopCartIcon} onClick={() => this.props.onMenuSelected() }/>
+            <ShoppingCartEmptyIcon
+                className={classes.shopCartIcon}
+                onClick={() => this.props.onMenuSelected()}
+            />
         );
         const cardContent = this.state.menu ? (
             <Aux className={classes.root}>
                 <CardHeader
-                    avatar={
-                        <Avatar aria-label="Recipe" className={classes.avatar}>
-                            R
-                        </Avatar>
+                    title={
+                        <span className={classes.title}>
+                            {this.state.menu.category}
+                        </span>
                     }
-                    action={
-                        <IconButton>
-                            <MoreVertIcon />
-                        </IconButton>
-                    }
-                    title={this.state.menu.category}
                     subheader={this.state.menu.title}
                 />
                 <CardMedia
                     className={classes.media}
-                    image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCemZZcjzkfYoN5bHkL45SeHzpOj9OTQmjXdDHxWHasEn44adL"
+                    image={
+                        this.state.menu.image ||
+                        "http://mamadips.com/wp-content/uploads/2016/11/defimage.gif"
+                    }
                     title="Contemplative Reptile"
                 />
                 <CardContent>
-                    <Typography component="p">
+                    <Typography component="p" className={classes.description}>
                         {this.state.menu.description}
                     </Typography>
                 </CardContent>

@@ -17,13 +17,22 @@ import MenuPanel from "./MenuPanel/MenuPanel";
 
 const styles = theme => ({
     root: {
-        [theme.breakpoints.down("sm")]: {},
-        [theme.breakpoints.up("md")]: {},
-        [theme.breakpoints.up("lg")]: {},
-        padding: "16px 8px 0px 8px"
+        padding: "16px 8px 0px 8px",
+        [theme.breakpoints.up("sm")]: {
+            padding: "32px 16px 0px 16px"
+        },
+        [theme.breakpoints.up("md")]: {
+            padding: "64px 32px 0px 32px"
+        },
+        [theme.breakpoints.up("lg")]: {
+            padding: "64px 64px 0px 64px"
+        }
     },
     titleContainer: {
-        marginBottom: 8
+        marginBottom: 16,
+        [theme.breakpoints.up("sm")]: {
+            marginBottom: 32
+        }
     },
     title: {
         textAlign: "center"

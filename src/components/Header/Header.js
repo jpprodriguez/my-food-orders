@@ -9,10 +9,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Hidden from "@material-ui/core/Hidden/Hidden";
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
-import withWidth, {
-    isWidthDown,
-    isWidthUp
-} from "@material-ui/core/withWidth/withWidth";
+import withWidth, { isWidthUp } from "@material-ui/core/withWidth/withWidth";
 
 const styles = {
     root: {
@@ -57,7 +54,7 @@ function ButtonAppBar(props) {
                             className={classes.menuButton}
                             color="inherit"
                             aria-label="Menu"
-                            onClick={() => props.onLogoutClick()}
+                            onClick={() => props.onMenuClick()}
                         >
                             <MenuIcon />
                         </IconButton>

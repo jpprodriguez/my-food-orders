@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
-import Button from "@material-ui/core/Button";
 import Header from "../../components/Header/Header";
 import CustomerMenu from "../customerMenu/customerMenu";
-import { createOrder, logOut, updateOrder } from "../../store/actions";
+import { logOut } from "../../store/actions";
+import SlidingDrawer from "../../components/SlidingDrawer/SlidingDrawer";
 
 class Home extends Component {
+    state = {
+        isDrawerOpen: false
+    };
     render() {
         const homeUI = (
             <div>
@@ -16,14 +18,26 @@ class Home extends Component {
                         this.props.userData ? this.props.userData.name : null
                     }
                     loading={this.props.userDataLoading}
+                    onMenuClick={() => this.menuClickHandler()}
                     onLogoutClick={this.props.onLogout}
                 />
-                <CustomerMenu/>
+                <SlidingDrawer
+                    isDrawerOpen={this.state.isDrawerOpen}
+                    onDrawerClose={() => {
+                        this.setState({ isDrawerOpen: false });
+                    }}
+                    onLogout={this.props.onLogout}
+                />
+                <CustomerMenu />
             </div>
         );
 
         return homeUI;
     }
+
+    menuClickHandler = () => {
+        this.setState(state => ({ isDrawerOpen: !state.isDrawerOpen }));
+    };
 }
 
 const mapDispatchToProps = dispatch => ({

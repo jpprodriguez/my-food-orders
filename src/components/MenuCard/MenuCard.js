@@ -25,11 +25,16 @@ import green from "@material-ui/core/colors/green";
 import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 import CheckboxList from "../CheckboxList/CheckboxList";
 import { getOrderByDayRef } from "../../firebase/orderService";
+import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 
 const styles = theme => ({
     root: {},
+    spinner: {
+        padding: "100px"
+    },
     card: {
-        width: 300
+        width: 300,
+        textAlign: "center"
     },
     cardSelected: {
         boxShadow: "0px 0px 1px 3px #37ca8e"
@@ -108,12 +113,10 @@ class RecipeReviewCard extends React.Component {
         const shoppingCartIcon = this.props.selected ? (
             <ShoppingCartIcon
                 className={classes.shopCartIcon}
-                onClick={() => this.props.onMenuRemoved()}
             />
         ) : (
             <ShoppingCartEmptyIcon
                 className={classes.shopCartIcon}
-                onClick={() => this.props.onMenuSelected()}
             />
         );
         const cardContent = this.state.menu ? (
@@ -140,7 +143,7 @@ class RecipeReviewCard extends React.Component {
                     </Typography>
                 </CardContent>
                 <CardActions className={classes.actions} disableActionSpacing>
-                    <IconButton aria-label="Add to favorites">
+                    <IconButton aria-label="Add to favorites" onClick={() => {this.props.onMenuSelected()}}>
                         {shoppingCartIcon}
                     </IconButton>
                     <IconButton
@@ -184,7 +187,7 @@ class RecipeReviewCard extends React.Component {
                     </CardContent>
                 </Collapse>
             </Aux>
-        ) : null;
+        ) : <CircularProgress className={classes.spinner} size={50} />;
         return <Card className={classes.card}>{cardContent}</Card>;
     }
     onFavoriteButtonClicked = () => {

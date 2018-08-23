@@ -3,6 +3,8 @@ import Divider from "@material-ui/core/Divider/Divider";
 import Typography from "@material-ui/core/es/Typography/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { connect } from "react-redux";
+import {toast, ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
     getCurrentMenuDatesRef,
     getCurrentMenuRef
@@ -11,9 +13,10 @@ import {
     currentMenuUpdated,
     currentMenuDatesUpdated
 } from "../../store/actions";
-import { objectToArray, objectWithKeysToArray } from "../../utils/utils";
 import { days as daysModel } from "../../firebase/common/models";
 import MenuPanel from "./MenuPanel/MenuPanel";
+import TabBar from "../../components/TabBar/TabBar";
+import Snackbar, {SnackbarTypes} from "../../components/Snackbar/Snackbars";
 
 const styles = theme => ({
     root: {
@@ -35,13 +38,22 @@ const styles = theme => ({
         }
     },
     title: {
-        textAlign: "center"
+        textAlign: "center",
+        [theme.breakpoints.up("sm")]: {
+            textAlign: "left"
+        }
     },
     panelDetails: {
         flexDirection: "column"
     },
     menuCard: {
         marginBottom: 8
+    },
+    toast: {
+        background: "transparent",
+        padding: 0,
+        margin: 0,
+        width: "fit-content"
     }
 });
 
@@ -62,6 +74,17 @@ class CustomerMenu extends Component {
         if (this.currentMenuRef.hasOwnProperty("off")) {
             this.currentMenuRef.off();
         }
+    }
+    shouldComponentUpdate(nextProps) {
+        if(nextProps.updateStatus !== this.props.updateStatus) {
+            if(!nextProps.updateStatus.wasSuccessful) {
+                toast(<Snackbar variant={SnackbarTypes.error} message={nextProps.updateStatus.errorMsg}/>);
+            } else {
+                toast(<Snackbar variant={SnackbarTypes.success} message={"Order Succesfully Updated"}/>);
+            }
+            return false;
+        }
+        return true;
     }
 
     render() {
@@ -85,8 +108,7 @@ class CustomerMenu extends Component {
                 color="inherit"
                 className={classes.title}
             >
-                Menu {new Date(this.props.dates.startDate).toLocaleDateString()}{" "}
-                - {new Date(this.props.dates.endDate).toLocaleDateString()}
+                {this.parseCurrentMenuDates(this.props.dates)}
             </Typography>
         ) : null;
         return (
@@ -95,15 +117,23 @@ class CustomerMenu extends Component {
                     {dates}
                     <Divider />
                 </div>
-                <div>{menuExpPanels}</div>
+                <TabBar items={days} content={menuExpPanels}/>
+                <ToastContainer toastClassName={classes.toast} hideProgressBar position={"bottom-left"} closeButton={false}/>
             </div>
         );
+    }
+
+    parseCurrentMenuDates(dates) {
+        const options = { month: 'numeric', day: 'numeric' };
+        return ("Current Menu: " +  new Date(dates.startDate).toLocaleDateString(undefined, options) + " - " +
+            new Date(dates.endDate).toLocaleDateString(undefined,options));
     }
 }
 
 const mapStateToProps = state => ({
     currentMenu: state.currentMenu.currentMenu,
-    dates: state.currentMenu.dates
+    dates: state.currentMenu.dates,
+    updateStatus: state.orders.updateStatus
 });
 
 const mapDispatchToProps = dispatch => ({

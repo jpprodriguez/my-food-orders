@@ -10,15 +10,15 @@ import { updateObject } from "../../utils/utils";
 const initialState = {
     orders: null,
     creationError: null,
-    updateError: null
+    updateStatus:null
 };
 
 const orderCreated = state => updateObject(state, { creationError: null });
 const orderCreationFailed = (state, action) =>
     updateObject(state, { creationError: action.error });
 const orderUpdateFailed = (state, action) =>
-    updateObject(state, { updateError: action.error });
-const orderUpdateSuccess = state => updateObject(state, { updateError: null });
+    updateObject(state,  { updateStatus: {wasSuccessful : false, errorMsg: action.error} });
+const orderUpdateSuccess = state => updateObject(state, { updateStatus: {wasSuccessful : true, errorMsg: null} });
 const orderUpdated = (state, action) =>
     updateObject(state, { orders: action.order });
 

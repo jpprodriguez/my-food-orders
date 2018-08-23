@@ -1,14 +1,36 @@
 import React from "react";
-import MenuPerDayMobile from "./MenuPerDayMobile/MenuPerDayMobile";
-import MenuPerDayDesktop from "./MenuPerDayDesktop/MenuPerDayDesktop";
-import withWidth, { isWidthUp } from "@material-ui/core/withWidth/withWidth";
+import withStyles from "@material-ui/core/styles/withStyles";
+import Paper from "@material-ui/core/Paper/Paper";
+import Typography from "@material-ui/core/Typography/Typography";
 
+const style = {
+    root: {
+        display: "flex",
+        flexWrap: "wrap",
+        padding: "24px",
+        marginBottom: "64px",
+        backgroundColor: "transparent"
+    },
+    title: {
+        textTransform: "capitalize",
+        width: "100%",
+        marginBottom: "16px"
+    }
+};
 const MenuPerDayCard = props => {
-    return isWidthUp("md", props.width) ? (
-        <MenuPerDayDesktop day={props.day}>{props.children}</MenuPerDayDesktop>
-    ) : (
-        <MenuPerDayMobile day={props.day}>{props.children}</MenuPerDayMobile>
+    const { classes } = props;
+    return (
+        <Paper className={classes.root}>
+            <Typography
+                className={classes.title}
+                component={"h3"}
+                variant={"title"}
+            >
+                {props.day}
+            </Typography>
+            {props.children}
+        </Paper>
     );
 };
 
-export default withWidth()(MenuPerDayCard);
+export default withStyles(style)(MenuPerDayCard);

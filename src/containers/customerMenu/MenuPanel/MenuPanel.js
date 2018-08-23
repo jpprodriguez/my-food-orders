@@ -1,13 +1,12 @@
 import React from "react";
-import MenuExpansionPanel from "../../../components/MenuExpansionPanel/MenuExpansionPanel";
 import MenuCard from "../../../components/MenuCard/MenuCard";
 import { connect } from "react-redux";
 import { updateOrderFromDay } from "../../../store/actions";
 import { getArrayWithoutItem } from "../../../utils/utils";
 import { Order } from "../../../firebase/common/models";
-import Paper from "@material-ui/core/Paper/Paper";
 import withStyles from "@material-ui/core/styles/withStyles";
 import MenuPerDayCard from "../../../components/MenuPerDayCard/MenuPerDayCard";
+import Aux from "../../../hoc/Aux/Aux";
 
 const styles = theme => ({
     menuCard: {
@@ -17,15 +16,13 @@ const styles = theme => ({
 
 const MenuPanel = props => {
     const { classes } = props;
-    const menuCards = props.menues.map(menuId => (
+    const menuCards = props.menues.map(menuId => {
+        const isSelected = props.orders && props.orders[props.day] && props.orders[props.day].id === menuId;
+        return (
         <div className={classes.menuCard} key={menuId}>
             <MenuCard
                 menuId={menuId}
-                selected={
-                    props.orders &&
-                    props.orders[props.day] &&
-                    props.orders[props.day].id === menuId
-                }
+                selected={isSelected}
                 options={
                     props.orders &&
                     props.orders[props.day] &&
@@ -36,17 +33,24 @@ const MenuPanel = props => {
                 onMenuDetailSelected={item =>
                     handleMenuDetailSelection(item, props)
                 }
-                onMenuSelected={() => handleMenuSelection(menuId, props)}
-                onMenuRemoved={() => handleMenuSelection(null, props)}
+                onMenuSelected={() => handleMenuSelection(isSelected, menuId, props)}
             />
-        </div>
-    ));
 
-    return <MenuPerDayCard day={props.day}>{menuCards}</MenuPerDayCard>;
+        </div>
+    )});
+
+    return (
+        <Aux>
+            <MenuPerDayCard day={props.day}>{menuCards}</MenuPerDayCard>
+        </Aux>
+    );
 };
 
-const handleMenuSelection = (menuId, props) => {
+const handleMenuSelection = (isSelected, menuId, props) => {
     let updatedOrder = new Order(menuId, []);
+    if(isSelected) {
+        updatedOrder.id = null;
+    }
     props.updateOrderFromDay(updatedOrder, props.day, props.user);
 };
 

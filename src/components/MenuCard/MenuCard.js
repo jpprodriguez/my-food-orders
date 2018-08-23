@@ -111,13 +111,9 @@ class RecipeReviewCard extends React.Component {
             <FavoriteEmptyIcon className={classes.favoriteIcon} />
         );
         const shoppingCartIcon = this.props.selected ? (
-            <ShoppingCartIcon
-                className={classes.shopCartIcon}
-            />
+            <ShoppingCartIcon className={classes.shopCartIcon} />
         ) : (
-            <ShoppingCartEmptyIcon
-                className={classes.shopCartIcon}
-            />
+            <ShoppingCartEmptyIcon className={classes.shopCartIcon} />
         );
         const cardContent = this.state.menu ? (
             <Aux className={classes.root}>
@@ -143,7 +139,12 @@ class RecipeReviewCard extends React.Component {
                     </Typography>
                 </CardContent>
                 <CardActions className={classes.actions} disableActionSpacing>
-                    <IconButton aria-label="Add to favorites" onClick={() => {this.props.onMenuSelected()}}>
+                    <IconButton
+                        aria-label="Add to favorites"
+                        onClick={() => {
+                            this.props.onMenuSelected();
+                        }}
+                    >
                         {shoppingCartIcon}
                     </IconButton>
                     <IconButton
@@ -187,7 +188,9 @@ class RecipeReviewCard extends React.Component {
                     </CardContent>
                 </Collapse>
             </Aux>
-        ) : <CircularProgress className={classes.spinner} size={50} />;
+        ) : (
+            <CircularProgress className={classes.spinner} size={50} />
+        );
         return <Card className={classes.card}>{cardContent}</Card>;
     }
     onFavoriteButtonClicked = () => {

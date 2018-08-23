@@ -3,8 +3,8 @@ import Divider from "@material-ui/core/Divider/Divider";
 import Typography from "@material-ui/core/es/Typography/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { connect } from "react-redux";
-import {toast, ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
     getCurrentMenuDatesRef,
     getCurrentMenuRef
@@ -16,7 +16,7 @@ import {
 import { days as daysModel } from "../../firebase/common/models";
 import MenuPanel from "./MenuPanel/MenuPanel";
 import TabBar from "../../components/TabBar/TabBar";
-import Snackbar, {SnackbarTypes} from "../../components/Snackbar/Snackbars";
+import Snackbar, { SnackbarTypes } from "../../components/Snackbar/Snackbars";
 
 const styles = theme => ({
     root: {
@@ -76,11 +76,21 @@ class CustomerMenu extends Component {
         }
     }
     shouldComponentUpdate(nextProps) {
-        if(nextProps.updateStatus !== this.props.updateStatus) {
-            if(!nextProps.updateStatus.wasSuccessful) {
-                toast(<Snackbar variant={SnackbarTypes.error} message={nextProps.updateStatus.errorMsg}/>);
+        if (nextProps.updateStatus !== this.props.updateStatus) {
+            if (!nextProps.updateStatus.wasSuccessful) {
+                toast(
+                    <Snackbar
+                        variant={SnackbarTypes.error}
+                        message={nextProps.updateStatus.errorMsg}
+                    />
+                );
             } else {
-                toast(<Snackbar variant={SnackbarTypes.success} message={"Order Succesfully Updated"}/>);
+                toast(
+                    <Snackbar
+                        variant={SnackbarTypes.success}
+                        message={"Order Succesfully Updated"}
+                    />
+                );
             }
             return false;
         }
@@ -117,16 +127,25 @@ class CustomerMenu extends Component {
                     {dates}
                     <Divider />
                 </div>
-                <TabBar items={days} content={menuExpPanels}/>
-                <ToastContainer toastClassName={classes.toast} hideProgressBar position={"bottom-left"} closeButton={false}/>
+                <TabBar items={days} content={menuExpPanels} />
+                <ToastContainer
+                    toastClassName={classes.toast}
+                    hideProgressBar
+                    position={"bottom-left"}
+                    closeButton={false}
+                />
             </div>
         );
     }
 
     parseCurrentMenuDates(dates) {
-        const options = { month: 'numeric', day: 'numeric' };
-        return ("Current Menu: " +  new Date(dates.startDate).toLocaleDateString(undefined, options) + " - " +
-            new Date(dates.endDate).toLocaleDateString(undefined,options));
+        const options = { month: "numeric", day: "numeric" };
+        return (
+            "Current Menu: " +
+            new Date(dates.startDate).toLocaleDateString(undefined, options) +
+            " - " +
+            new Date(dates.endDate).toLocaleDateString(undefined, options)
+        );
     }
 }
 

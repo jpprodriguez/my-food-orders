@@ -17,27 +17,32 @@ const styles = theme => ({
 const MenuPanel = props => {
     const { classes } = props;
     const menuCards = props.menues.map(menuId => {
-        const isSelected = props.orders && props.orders[props.day] && props.orders[props.day].id === menuId;
+        const isSelected =
+            props.orders &&
+            props.orders[props.day] &&
+            props.orders[props.day].id === menuId;
         return (
-        <div className={classes.menuCard} key={menuId}>
-            <MenuCard
-                menuId={menuId}
-                selected={isSelected}
-                options={
-                    props.orders &&
-                    props.orders[props.day] &&
-                    props.orders[props.day].options
-                        ? props.orders[props.day].options
-                        : null
-                }
-                onMenuDetailSelected={item =>
-                    handleMenuDetailSelection(item, props)
-                }
-                onMenuSelected={() => handleMenuSelection(isSelected, menuId, props)}
-            />
-
-        </div>
-    )});
+            <div className={classes.menuCard} key={menuId}>
+                <MenuCard
+                    menuId={menuId}
+                    selected={isSelected}
+                    options={
+                        props.orders &&
+                        props.orders[props.day] &&
+                        props.orders[props.day].options
+                            ? props.orders[props.day].options
+                            : null
+                    }
+                    onMenuDetailSelected={item =>
+                        handleMenuDetailSelection(item, props)
+                    }
+                    onMenuSelected={() =>
+                        handleMenuSelection(isSelected, menuId, props)
+                    }
+                />
+            </div>
+        );
+    });
 
     return (
         <Aux>
@@ -48,7 +53,7 @@ const MenuPanel = props => {
 
 const handleMenuSelection = (isSelected, menuId, props) => {
     let updatedOrder = new Order(menuId, []);
-    if(isSelected) {
+    if (isSelected) {
         updatedOrder.id = null;
     }
     props.updateOrderFromDay(updatedOrder, props.day, props.user);

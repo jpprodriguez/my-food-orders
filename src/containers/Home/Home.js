@@ -1,14 +1,30 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Header from "../../components/Header/Header";
-import CustomerMenu from "../customerMenu/customerMenu";
 import { logOut } from "../../store/actions";
 import SlidingDrawer from "../../components/SlidingDrawer/SlidingDrawer";
+import {userTypes} from "../../firebase/common/models";
+import ProviderMenu from "../ProviderMenu/ProviderMenu";
+import CustomerMenu from "../CustomerMenu/CustomerMenu";
+import LinearQuery from "../../components/LinearQuery/LinearQuery";
 
 class Home extends Component {
     state = {
         isDrawerOpen: false
     };
+    getHomeContent =  (userType) => {
+        switch(userType) {
+            case userTypes.admin:
+                return null;
+            case userTypes.customer:
+                return <CustomerMenu/>;
+            case userTypes.provider:
+                return <ProviderMenu/>;
+            default:
+                return null;
+        }
+    };
+
     render() {
         const homeUI = (
             <div>
@@ -28,7 +44,8 @@ class Home extends Component {
                     }}
                     onLogout={this.props.onLogout}
                 />
-                <CustomerMenu />
+
+                {this.props.userData ? this.getHomeContent(this.props.userData.type) : null}
             </div>
         );
 

@@ -7,6 +7,7 @@ import {
     LOGGED_OUT,
     AUTH_CHECKED
 } from "../actionTypes";
+import {userLoggedOut} from "./users";
 
 export const authStart = () => ({
     type: AUTH_START
@@ -53,6 +54,7 @@ export const logOut = () => dispatch => {
         .auth()
         .signOut()
         .then(() => {
+            dispatch(userLoggedOut());
             dispatch(loggedOut());
             console.log("user logged out");
         });

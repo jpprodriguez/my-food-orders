@@ -1,7 +1,7 @@
 import {
     USER_RETRIEVED,
     USER_RETRIEVE_FAILED,
-    RETRIEVING_USER_DATA
+    RETRIEVING_USER_DATA, USER_LOGGED_OUT
 } from "../actionTypes";
 import { getUserData } from "../../firebase/userService";
 
@@ -18,6 +18,12 @@ export const retrieveUserData = user => dispatch => {
     } catch (err) {
         dispatch(userDataRetrieveFailed(err));
     }
+};
+
+export const userLoggedOut = () => {
+    return {
+        type: USER_LOGGED_OUT
+    };
 };
 
 const retrievingUserData = () => {

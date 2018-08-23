@@ -41,6 +41,12 @@ export const menuCategories = Object.freeze({
     vegan: "vegan"
 });
 
+export const userTypes = Object.freeze({
+    provider: "provider",
+    customer: "customer",
+    admin: "admin"
+});
+
 export const days = Object.freeze([
     "monday",
     "tuesday",

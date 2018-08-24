@@ -1,12 +1,12 @@
 import React from "react";
-import MenuCard from "../../../components/MenuCard/MenuCard";
+import MenuCard from "../../../../components/MenuCard/MenuCard";
 import { connect } from "react-redux";
-import { updateOrderFromDay } from "../../../store/actions";
-import { getArrayWithoutItem } from "../../../utils/utils";
-import { Order } from "../../../firebase/common/models";
+import { updateOrderFromDay } from "../../../../store/actions/index";
+import { getArrayWithoutItem } from "../../../../utils/utils";
+import { Order } from "../../../../firebase/common/models";
 import withStyles from "@material-ui/core/styles/withStyles";
-import MenuPerDayCard from "../../../components/MenuPerDayCard/MenuPerDayCard";
-import Aux from "../../../hoc/Aux/Aux";
+import MenuPerDayCard from "../../../../components/MenuPerDayCard/MenuPerDayCard";
+import Aux from "../../../../hoc/Aux/Aux";
 
 const styles = theme => ({
     menuCard: {

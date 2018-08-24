@@ -7,7 +7,7 @@ import {
     LOGGED_OUT,
     AUTH_CHECKED
 } from "../actionTypes";
-import {userLoggedOut} from "./users";
+import { userLoggedOut } from "./users";
 
 export const authStart = () => ({
     type: AUTH_START

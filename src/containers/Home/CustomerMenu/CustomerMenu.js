@@ -8,15 +8,15 @@ import "react-toastify/dist/ReactToastify.css";
 import {
     getCurrentMenuDatesRef,
     getCurrentMenuRef
-} from "../../firebase/currentMenuService";
+} from "../../../firebase/currentMenuService";
 import {
     currentMenuUpdated,
     currentMenuDatesUpdated
-} from "../../store/actions";
-import { days as daysModel } from "../../firebase/common/models";
+} from "../../../store/actions/index";
+import { days as daysModel } from "../../../firebase/common/models";
 import MenuPanel from "./MenuPanel/MenuPanel";
-import TabBar from "../../components/TabBar/TabBar";
-import Snackbar, { SnackbarTypes } from "../../components/Snackbar/Snackbars";
+import TabBar from "../../../components/TabBar/TabBar";
+import Snackbar, { SnackbarTypes } from "../../../components/Snackbar/Snackbars";
 
 const styles = theme => ({
     root: {
@@ -81,7 +81,7 @@ class CustomerMenu extends Component {
                 toast(
                     <Snackbar
                         variant={SnackbarTypes.error}
-                        message={nextProps.updateStatus.errorMsg}
+                        message={nextProps.updateStatus.errorMsg.message}
                     />
                 );
             } else {

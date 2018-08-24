@@ -21,7 +21,12 @@ const userRetrieved = (state, action) =>
 const userRetrieveFailed = (state, action) =>
     updateObject(state, { retrievalError: action.error, loading: false });
 const retrievingUserData = state => updateObject(state, { loading: true });
-const userLoggedOut = state => updateObject(state, { userData: null, loading: false, retrievalError: null });
+const userLoggedOut = state =>
+    updateObject(state, {
+        userData: null,
+        loading: false,
+        retrievalError: null
+    });
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {

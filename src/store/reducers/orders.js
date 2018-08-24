@@ -8,7 +8,7 @@ import {
 import { updateObject } from "../../utils/utils";
 
 const initialState = {
-    orders: null,
+    order: null,
     creationError: null,
     updateStatus: null
 };
@@ -25,7 +25,7 @@ const orderUpdateSuccess = state =>
         updateStatus: { wasSuccessful: true, errorMsg: null }
     });
 const orderUpdated = (state, action) =>
-    updateObject(state, { orders: action.order });
+    updateObject(state, { order: action.order });
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {

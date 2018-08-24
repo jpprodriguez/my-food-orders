@@ -9,15 +9,11 @@ import {
     loggedIn,
     logOut,
     authChecked,
-    orderUpdated,
     retrieveUserData
 } from "./store/actions";
 import Home from "./containers/Home/Home";
-import { getOrdersRoute } from "./firebase/common/routes";
-import { getRef } from "./firebase/common/utils";
 
 class App extends Component {
-    ordersRef = null;
     componentWillMount() {
         this.checkAuth(this);
     }
@@ -28,15 +24,8 @@ class App extends Component {
                 console.log("THE USER IS SIGNED IN");
                 self.props.logIn(user);
                 self.props.getUserData(user);
-                this.ordersRef = getRef(getOrdersRoute(user.uid));
-                this.ordersRef.on("value", snapshot => {
-                    self.props.orderUpdated(snapshot.val());
-                });
             } else {
                 console.log("THE USER IS SIGNED OFF");
-                if (this.ordersRef) {
-                    this.ordersRef.off();
-                }
                 self.props.logOut();
             }
             self.props.authChecked();
@@ -69,7 +58,6 @@ const mapDispatchToProps = dispatch => ({
     authChecked: () => dispatch(authChecked()),
     logOut: () => dispatch(logOut()),
     logIn: user => dispatch(loggedIn(user)),
-    orderUpdated: order => dispatch(orderUpdated(order)),
     getUserData: user => dispatch(retrieveUserData(user))
 });
 const mapStateToProps = state => ({

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Component} from "react";
 import MenuCard from "../../../../components/MenuCard/MenuCard";
 import { connect } from "react-redux";
 import { updateOrderFromDay } from "../../../../store/actions/index";
@@ -7,89 +7,105 @@ import { Order } from "../../../../firebase/common/models";
 import withStyles from "@material-ui/core/styles/withStyles";
 import MenuPerDayCard from "../../../../components/MenuPerDayCard/MenuPerDayCard";
 import Aux from "../../../../hoc/Aux/Aux";
+import {getOrderByDateRoute} from "../../../../firebase/common/routes";
+import {orderUpdated} from "../../../../store/actions";
+import {getRef} from "../../../../firebase/common/utils";
 
-const styles = theme => ({
+const styles = ({
     menuCard: {
         margin: "0 16px 16px 0px"
     }
 });
 
-const MenuPanel = props => {
-    const { classes } = props;
-    const menuCards = props.menues.map(menuId => {
-        const isSelected =
-            props.orders &&
-            props.orders[props.day] &&
-            props.orders[props.day].id === menuId;
-        return (
-            <div className={classes.menuCard} key={menuId}>
-                <MenuCard
-                    menuId={menuId}
-                    selected={isSelected}
-                    options={
-                        props.orders &&
-                        props.orders[props.day] &&
-                        props.orders[props.day].options
-                            ? props.orders[props.day].options
-                            : null
-                    }
-                    onMenuDetailSelected={item =>
-                        handleMenuDetailSelection(item, props)
-                    }
-                    onMenuSelected={() =>
-                        handleMenuSelection(isSelected, menuId, props)
-                    }
-                />
-            </div>
-        );
-    });
+class MenuPanel extends Component {
+    ordersRef = null;
+    componentWillMount() {
+        this.ordersRef = getRef(getOrderByDateRoute(this.props.user.uid, this.props.day));
+        this.ordersRef.on("value", snapshot => {
+            this.props.orderUpdated(snapshot.val());
+        });
+    }
+    componentWillUnmount() {
+        if(this.ordersRef) {
+            this.ordersRef.off();
+        }
+    }
+    render() {
+        const { classes, order, menues, day, user, updateOrderFromDay } = this.props;
+        const menuCards = menues.map(menuId => {
+            const isSelected =
+                order &&
+                order.id === menuId;
+            return (
+                <div className={classes.menuCard} key={menuId}>
+                    <MenuCard
+                        menuId={menuId}
+                        selected={isSelected}
+                        options={
+                            order &&
+                            order.options
+                                ? order.options
+                                : null
+                        }
+                        onMenuDetailSelected={item =>
+                            handleMenuDetailSelection(item, order, day, user, updateOrderFromDay)
+                        }
+                        onMenuSelected={() =>
+                            handleMenuSelection(isSelected, menuId, day, user, updateOrderFromDay)
+                        }
+                    />
+                </div>
+            );
+        });
 
-    return (
-        <Aux>
-            <MenuPerDayCard day={props.day}>{menuCards}</MenuPerDayCard>
-        </Aux>
-    );
+        return (
+            <Aux>
+                <MenuPerDayCard day={day}>{menuCards}</MenuPerDayCard>
+            </Aux>
+        );
+    }
 };
 
-const handleMenuSelection = (isSelected, menuId, props) => {
+const handleMenuSelection = (isSelected, menuId, day, user, updateOrderFromDay) => {
     let updatedOrder = new Order(menuId, []);
     if (isSelected) {
         updatedOrder.id = null;
     }
-    props.updateOrderFromDay(updatedOrder, props.day, props.user);
+    updateOrderFromDay(updatedOrder, day, user);
 };
 
-const handleMenuDetailSelection = (item, props) => {
+const handleMenuDetailSelection = (item, order, day, user, updateOrderFromDay) => {
     let changes;
 
     if (
-        props.orders[props.day].options &&
-        props.orders[props.day].options.indexOf(item) !== -1
+        order.options &&
+        order.options.indexOf(item) !== -1
     ) {
         changes = {
             options: getArrayWithoutItem(
-                [...props.orders[props.day].options],
+                [...order.options],
                 item
             )
         };
     } else {
         changes = {
-            options: props.orders[props.day].options
-                ? [...props.orders[props.day].options].concat(item)
+            options: order.options
+                ? [...order.options].concat(item)
                 : [item]
         };
     }
 
-    props.updateOrderFromDay(changes, props.day, props.user);
+    updateOrderFromDay(changes, day, user);
 };
 const mapStateToProps = state => ({
-    orders: state.orders.orders,
+    order: state.orders.order,
     user: state.auth.user
 });
 
 const mapDispatchToProps = dispatch => ({
     updateOrderFromDay: (changes, day, user) =>
-        dispatch(updateOrderFromDay(changes, day, user))
+        dispatch(updateOrderFromDay(changes, day, user)),
+    orderUpdated: order => dispatch(orderUpdated(order))
 });
 
 export default connect(

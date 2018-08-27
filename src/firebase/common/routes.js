@@ -3,6 +3,8 @@ export const getOrdersRoute = userId => routes.orders + "/" + userId;
 export const getOrderByDateRoute = (userId, day) =>
     routes.orders + "/" + day + "/" + userId;
 
+export const getAllUsersRoute = () => routes.users;
+
 export const getUserRoute = userId => routes.users + "/" + userId;
 
 export const getCurrentMenuRoute = () => routes.currentMenu;

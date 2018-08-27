@@ -55,3 +55,7 @@ export const getOrderByDayRef = (day, user) => {
         throw "userID not found";
     }
 };
+
+export const getAllOrders = (day) => {
+
+}

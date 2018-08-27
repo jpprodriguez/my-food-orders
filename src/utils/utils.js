@@ -7,6 +7,12 @@ export const objectToArray = obj => {
     return obj ? Object.keys(obj).map(i => obj[i]) : null;
 };
 
+export const objectToArrayWithKey = obj => {
+    return obj ? Object.keys(obj).map(i => {
+        return {...obj[i],key: i}
+    }) : null;
+};
+
 export const objectWithKeysToArray = obj => {
     return obj ? Object.keys(obj).map(i => [i, obj[i]]) : null;
 };

@@ -29,25 +29,23 @@ function SimpleTable(props) {
                     <TableRow>
                         <TableCell>Name</TableCell>
                         <TableCell>File Number</TableCell>
+                        <TableCell>Food</TableCell>
                         <TableCell>Category</TableCell>
                         <TableCell>Options</TableCell>
-                        <TableCell>Delivered</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {props.rows.map(row => {
+                    {props.users.map(user => {
                         return (
-                            <TableRow key={row.fileNumber}>
+                            <TableRow key={user.fileNumber}>
                                 <TableCell component="th" scope="row">
-                                    {row.name}
+                                    {user.name}
                                 </TableCell>
-                                <TableCell>{row.fileNumber}</TableCell>
-                                <TableCell>{row.category}</TableCell>
+                                <TableCell>{user.fileNumber}</TableCell>
+                                <TableCell>{user.food}</TableCell>
+                                <TableCell>{user.category}</TableCell>
                                 <TableCell>
-                                    {row.options ? row.options[0] : "-"}
-                                </TableCell>
-                                <TableCell>
-                                    {row.delivered ? "yes" : "no"}
+                                    {user.options ? user.options[0] : "-"}
                                 </TableCell>
                             </TableRow>
                         );

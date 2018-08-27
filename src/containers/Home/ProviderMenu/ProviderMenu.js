@@ -5,40 +5,32 @@ import { connect } from "react-redux";
 import { objectToArray } from "../../../utils/utils";
 import MenuTable from "../../../components/MenuTable/MenuTable";
 import withStyles from "@material-ui/core/es/styles/withStyles";
+import {getAllUsers} from "../../../firebase/userService";
+import OrdersPanel from "../common/OrdersPanel/OrdersPanel";
 
 const styles = {
     root: {}
 };
 
 class ProviderMenu extends Component {
-    days = daysModel;
-    ordersRef = null;
-    componentWillMount() {
-        // this.ordersRef = getAllOrdersyRef();
-        // this.ordersRef.on("value", snapshot => {
-        //     this.props.allOrdersUpdated(snapshot.val());
-        // });
-    }
-    componentWillUnmount() {
-        if (this.ordersRef.hasOwnProperty("off")) {
-            this.ordersRef.off();
-        }
-    }
+
+
     render() {
-        const orders = this.props.orders
+        const orderPanels = this.state.users
             ? this.days.map(
-                  day =>
-                      this.props.orders[day] ? (
-                          <MenuTable
-                              rows={objectToArray(this.props.orders[day])}
-                          />
-                      ) : null
-              )
+                day =>
+                    // this.props.orders[day] ? (
+                    //     <OrdersPanel
+                    //         day={day}
+                    //     />
+                    // ) : null
+                    null
+            )
             : null;
 
         return (
             <div>
-                <TabBar items={this.days} content={orders} />
+                <TabBar items={this.days} content={orderPanels} />
             </div>
         );
     }

@@ -16,7 +16,9 @@ import {
 import { days as daysModel } from "../../../firebase/common/models";
 import MenuPanel from "./MenuPanel/MenuPanel";
 import TabBar from "../../../components/TabBar/TabBar";
-import Snackbar, { SnackbarTypes } from "../../../components/Snackbar/Snackbars";
+import Snackbar, {
+    SnackbarTypes
+} from "../../../components/Snackbar/Snackbars";
 
 const styles = theme => ({
     root: {

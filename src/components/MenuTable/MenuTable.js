@@ -7,6 +7,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import MenuRow from "./MenuRow/MenuRow";
 
 const styles = theme => ({
     root: {
@@ -20,7 +21,7 @@ const styles = theme => ({
 });
 
 function SimpleTable(props) {
-    const { classes } = props;
+    const { classes, users, day } = props;
 
     return (
         <Paper className={classes.root}>
@@ -35,21 +36,15 @@ function SimpleTable(props) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {props.users.map(user => {
-                        return (
-                            <TableRow key={user.fileNumber}>
-                                <TableCell component="th" scope="row">
-                                    {user.name}
-                                </TableCell>
-                                <TableCell>{user.fileNumber}</TableCell>
-                                <TableCell>{user.food}</TableCell>
-                                <TableCell>{user.category}</TableCell>
-                                <TableCell>
-                                    {user.options ? user.options[0] : "-"}
-                                </TableCell>
-                            </TableRow>
-                        );
-                    })}
+                    {users
+                        ? users.map(user => (
+                              <MenuRow
+                                  key={user.key + day}
+                                  user={user}
+                                  day={day}
+                              />
+                          ))
+                        : null}
                 </TableBody>
             </Table>
         </Paper>

@@ -8,9 +8,11 @@ export const objectToArray = obj => {
 };
 
 export const objectToArrayWithKey = obj => {
-    return obj ? Object.keys(obj).map(i => {
-        return {...obj[i],key: i}
-    }) : null;
+    return obj
+        ? Object.keys(obj).map(i => {
+              return { ...obj[i], key: i };
+          })
+        : null;
 };
 
 export const objectWithKeysToArray = obj => {

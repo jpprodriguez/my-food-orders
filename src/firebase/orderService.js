@@ -56,6 +56,4 @@ export const getOrderByDayRef = (day, user) => {
     }
 };
 
-export const getAllOrders = (day) => {
-
-}
+export const getAllOrders = day => {};

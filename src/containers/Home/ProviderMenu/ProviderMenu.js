@@ -7,6 +7,7 @@ import MenuTable from "../../../components/MenuTable/MenuTable";
 import withStyles from "@material-ui/core/es/styles/withStyles";
 import { getAllUsers } from "../../../firebase/userService";
 import OrdersPanel from "../common/OrdersPanel/OrdersPanel";
+import { setOrders, updateAllOrders } from "../../../store/actions";
 
 const styles = {
     root: {}
@@ -20,16 +21,17 @@ class ProviderMenu extends Component {
     componentDidMount() {
         getAllUsers()
             .then(snapshot => {
-                this.setState({ users: objectToArrayWithKey(snapshot.val()) });
+                // this.setState({ users: objectToArrayWithKey(snapshot.val()) });
+                this.props.setOrders(objectToArrayWithKey(snapshot.val()));
             })
             .catch(err => {
                 console.log(err);
             });
     }
     render() {
-        const orderPanels = this.state.users
+        const orderPanels = this.props.orders
             ? this.days.map(day => (
-                  <OrdersPanel users={this.state.users} day={day} />
+                  <OrdersPanel orders={this.props.orders} day={day} />
               ))
             : null;
         return (
@@ -41,11 +43,13 @@ class ProviderMenu extends Component {
 }
 
 const mapStateToProps = state => ({
-    // orders: state.orders.allOrders
+    orders: state.orders.allOrders
 });
 
 const mapDispatchToProps = dispatch => ({
-    // allOrdersUpdated: newOrders => dispatch(allOrdersUpdated(newOrders))
+    updateOrderInOrders: (ordersData, userId, newOrderData) =>
+        dispatch(updateAllOrders(ordersData, userId, newOrderData)),
+    setOrders: ordersData => dispatch(setOrders(ordersData))
 });
 
 export default connect(

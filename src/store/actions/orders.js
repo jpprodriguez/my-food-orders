@@ -3,7 +3,9 @@ import {
     ORDER_CREATION_FAILED,
     ORDER_UPDATED,
     ORDER_UPDATE_FAILED,
-    ORDER_UPDATE_SUCCESS
+    ORDER_UPDATE_SUCCESS,
+    UPDATE_ORDER_IN_ORDERS,
+    SET_ORDERS
 } from "../actionTypes";
 import {
     createOrder as createOrderInFirebase,
@@ -81,5 +83,23 @@ export const orderUpdated = order => {
     return {
         type: ORDER_UPDATED,
         order: order
+    };
+};
+
+export const setOrders = ordersData => {
+    return {
+        type: SET_ORDERS,
+        orders: ordersData
+    };
+};
+
+export const updateAllOrders = (ordersData, userId, newOrderData) => {
+    const newOrdersData = [...ordersData];
+    const indexOfDataToUpdate = newOrdersData.map(e => e.key).indexOf(userId);
+    newOrdersData[indexOfDataToUpdate] = newOrderData;
+
+    return {
+        type: UPDATE_ORDER_IN_ORDERS,
+        orders: newOrdersData
     };
 };

@@ -4,16 +4,16 @@ import TableCell from "@material-ui/core/TableCell/TableCell";
 import { getOrderByDateRoute } from "../../../firebase/common/routes";
 import { getRef } from "../../../firebase/common/utils";
 import { getMenuByIdRef } from "../../../firebase/MenuService";
+import { connect } from "react-redux";
+import { updateAllOrders } from "../../../store/actions";
 
 class MenuRow extends Component {
     userRef = null;
     foodRef = null;
-    state = {
-        user: { ...this.props.user }
-    };
+
     componentDidMount() {
         this.userRef = getRef(
-            getOrderByDateRoute(this.state.user.key, this.props.day)
+            getOrderByDateRoute(this.props.user.key, this.props.day)
         );
         this.userRef.on("value", snapshot => {
             this.handleUserOrderUpdate(snapshot.val());
@@ -26,7 +26,7 @@ class MenuRow extends Component {
         }
     }
     render() {
-        const { user } = this.state;
+        const { user } = this.props;
         const options = user.options
             ? user.options.map(option => <li key={option}>{option}</li>)
             : "-";
@@ -46,33 +46,53 @@ class MenuRow extends Component {
     }
 
     handleUserOrderUpdate = updatedUserOrder => {
+        let newUser = { ...this.props.user };
         if (!updatedUserOrder) {
-            let newUser = { ...this.state.user };
             newUser.food = null;
             newUser.category = null;
             newUser.options = null;
-            this.setState({ user: newUser });
-            return;
-        }
-        if (updatedUserOrder.id !== this.state.user.id) {
+            this.props.updateOrderInOrders(
+                this.props.orders,
+                this.props.user.key,
+                newUser
+            );
+        } else if (updatedUserOrder.id !== this.props.user.id) {
             if (this.foodRef) {
                 this.foodRef.off();
             }
             this.foodRef = getMenuByIdRef(updatedUserOrder.id);
             this.foodRef.on("value", snapshot => {
-                let newUser = { ...this.state.user };
                 const newFood = snapshot.val();
                 newUser.food = newFood.title;
                 newUser.category = newFood.category;
                 newUser.options = updatedUserOrder.options;
-                this.setState({ user: newUser });
+                this.props.updateOrderInOrders(
+                    this.props.orders,
+                    this.props.user.key,
+                    newUser
+                );
             });
         } else {
-            let newUser = { ...this.state.user };
             newUser.options = updatedUserOrder.options;
-            this.setState({ user: newUser });
+            this.props.updateOrderInOrders(
+                this.props.orders,
+                this.props.user.key,
+                newUser
+            );
         }
     };
 }
 
-export default MenuRow;
+const mapStateToProps = state => ({
+    orders: state.orders.allOrders
+});
+
+const mapDispatchToProps = dispatch => ({
+    updateOrderInOrders: (ordersData, userId, newOrderData) =>
+        dispatch(updateAllOrders(ordersData, userId, newOrderData))
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(MenuRow);

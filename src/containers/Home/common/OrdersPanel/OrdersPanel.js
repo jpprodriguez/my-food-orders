@@ -11,7 +11,7 @@ class OrdersPanel extends Component {
     render() {
         return (
             <div>
-                <MenuTable users={this.props.users} day={this.props.day} />
+                <MenuTable orders={this.props.orders} day={this.props.day} />
             </div>
         );
     }

@@ -8,6 +8,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import MenuRow from "./MenuRow/MenuRow";
+import { updateAllOrders } from "../../store/actions";
 
 const styles = theme => ({
     root: {
@@ -21,7 +22,7 @@ const styles = theme => ({
 });
 
 function SimpleTable(props) {
-    const { classes, users, day } = props;
+    const { classes, orders, day } = props;
 
     return (
         <Paper className={classes.root}>
@@ -36,8 +37,8 @@ function SimpleTable(props) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {users
-                        ? users.map(user => (
+                    {orders
+                        ? orders.map(user => (
                               <MenuRow
                                   key={user.key + day}
                                   user={user}

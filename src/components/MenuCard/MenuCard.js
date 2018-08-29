@@ -8,7 +8,6 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
-import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import red from "@material-ui/core/colors/red";
@@ -17,14 +16,11 @@ import FavoriteEmptyIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import ShoppingCartEmptyIcon from "@material-ui/icons/ShoppingCartOutlined";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { getMenuByIdRef } from "../../firebase/MenuService";
 import Aux from "../../hoc/Aux/Aux";
 import pink from "@material-ui/core/colors/pink";
 import green from "@material-ui/core/colors/green";
-import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 import CheckboxList from "../CheckboxList/CheckboxList";
-import { getOrderByDayRef } from "../../firebase/orderService";
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 
 const styles = theme => ({

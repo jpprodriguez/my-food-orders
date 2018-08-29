@@ -1,8 +1,7 @@
 import { getRef } from "./common/utils";
 import {
     getCurrentMenuRoute,
-    getCurrentMenuDatesRoute,
-    getMenuByIdRoute
+    getCurrentMenuDatesRoute
 } from "./common/routes";
 
 export const getCurrentMenuRef = () => {

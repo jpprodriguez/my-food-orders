@@ -1,5 +1,4 @@
 import firebase from "firebase";
-import { getAllMenusRoute } from "./routes";
 
 export class User {
     constructor(name, fileNumber, type, isVeggie) {

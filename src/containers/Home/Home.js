@@ -4,9 +4,8 @@ import Header from "../../components/Header/Header";
 import { logOut } from "../../store/actions";
 import SlidingDrawer from "../../components/SlidingDrawer/SlidingDrawer";
 import { userTypes } from "../../firebase/common/models";
-import ProviderMenu from "./ProviderMenu/ProviderMenu";
-import CustomerMenu from "./CustomerMenu/CustomerMenu";
-import LinearQuery from "../../components/LinearQuery/LinearQuery";
+import ProviderMenu from "./ProviderPanel/ProviderPanel";
+import CustomerMenu from "./CustomerPanel/CustomerPanel";
 
 class Home extends Component {
     state = {

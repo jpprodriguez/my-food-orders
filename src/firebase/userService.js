@@ -8,7 +8,7 @@ export const getUserData = user => {
         const route = getUserRoute(userId);
         return getOnce(route);
     } else {
-        throw "userID not found";
+        throw new Error("userID not found");
     }
 };
 

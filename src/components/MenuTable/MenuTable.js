@@ -8,7 +8,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import MenuRow from "./MenuRow/MenuRow";
-import { updateAllOrders } from "../../store/actions";
 
 const styles = theme => ({
     root: {

@@ -6,7 +6,7 @@ import { objectToArrayWithKey } from "../../../utils/utils";
 import withStyles from "@material-ui/core/es/styles/withStyles";
 import { getAllUsers } from "../../../firebase/userService";
 import OrdersPanel from "../common/OrdersPanel/OrdersPanel";
-import { setOrders, updateAllOrders } from "../../../store/actions";
+import { setOrders } from "../../../store/actions";
 
 const styles = {
     root: {}
@@ -45,8 +45,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    updateOrderInOrders: (ordersData, userId, newOrderData) =>
-        dispatch(updateAllOrders(ordersData, userId, newOrderData)),
     setOrders: ordersData => dispatch(setOrders(ordersData))
 });
 

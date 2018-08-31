@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import MenuTable from "../../../../components/MenuTable/MenuTable";
 
 class OrdersPanel extends Component {
+    componentWillMount() {
+        if (this.props.onInit) {
+            this.props.onInit();
+        }
+    }
     render() {
         return (
             <div>

@@ -4,8 +4,9 @@ import Header from "../../components/Header/Header";
 import { logOut } from "../../store/actions";
 import SlidingDrawer from "../../components/SlidingDrawer/SlidingDrawer";
 import { userTypes } from "../../firebase/common/models";
-import ProviderMenu from "./ProviderPanel/ProviderPanel";
-import CustomerMenu from "./CustomerPanel/CustomerPanel";
+import ProviderPanel from "./ProviderPanel/ProviderPanel";
+import CustomerPanel from "./CustomerPanel/CustomerPanel";
+import AdminPanel from "./AdminPanel/AdminPanel";
 
 class Home extends Component {
     state = {
@@ -14,11 +15,11 @@ class Home extends Component {
     getHomeContent = userType => {
         switch (userType) {
             case userTypes.admin:
-                return null;
+                return <AdminPanel />;
             case userTypes.customer:
-                return <CustomerMenu />;
+                return <CustomerPanel />;
             case userTypes.provider:
-                return <ProviderMenu />;
+                return <ProviderPanel />;
             default:
                 return null;
         }

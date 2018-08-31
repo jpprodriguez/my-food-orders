@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import MenuCard from "../../../../components/MenuCard/MenuCard";
 import { connect } from "react-redux";
 import { updateOrderFromDay } from "../../../../store/actions/index";
 import { getArrayWithoutItem } from "../../../../utils/utils";
@@ -10,6 +9,7 @@ import Aux from "../../../../hoc/Aux/Aux";
 import { getOrderByDateRoute } from "../../../../firebase/common/routes";
 import { orderUpdated } from "../../../../store/actions";
 import { getRef } from "../../../../firebase/common/utils";
+import CustomerMenuCard from "../../../../components/MenuCard/CustomerMenuCard/CustomerMenuCard";
 
 const styles = {
     menuCard: {
@@ -45,7 +45,7 @@ class MenuPanel extends Component {
             const isSelected = order && order.id === menuId;
             return (
                 <div className={classes.menuCard} key={menuId}>
-                    <MenuCard
+                    <CustomerMenuCard
                         menuId={menuId}
                         selected={isSelected}
                         options={order && order.options ? order.options : null}

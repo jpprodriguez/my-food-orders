@@ -73,7 +73,7 @@ class CustomerMenu extends Component {
         });
     }
     componentWillUnmount() {
-        if (this.currentMenuRef.hasOwnProperty("off")) {
+        if (this.currentMenuRef) {
             this.currentMenuRef.off();
         }
     }

@@ -16,11 +16,10 @@ import FavoriteEmptyIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import ShoppingCartEmptyIcon from "@material-ui/icons/ShoppingCartOutlined";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { getMenuByIdRef } from "../../firebase/MenuService";
-import Aux from "../../hoc/Aux/Aux";
+import Aux from "../../../hoc/Aux/Aux";
 import pink from "@material-ui/core/colors/pink";
 import green from "@material-ui/core/colors/green";
-import CheckboxList from "../CheckboxList/CheckboxList";
+import CheckboxList from "../../CheckboxList/CheckboxList";
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 
 const styles = theme => ({
@@ -79,28 +78,14 @@ const styles = theme => ({
 });
 
 class RecipeReviewCard extends React.Component {
-    state = { expanded: false, menu: null, isFavorite: false, order: null };
-    menuByIdRef = null;
+    state = { expanded: false, isFavorite: false };
 
-    componentDidMount() {
-        this.menuByIdRef = getMenuByIdRef(this.props.menuId).on(
-            "value",
-            snapshot => {
-                this.setState({ menu: snapshot.val() });
-            }
-        );
-    }
-    componentWillUnmount() {
-        if (this.menuByIdRef.hasOwnProperty("off")) {
-            this.menuByIdRef.off();
-        }
-    }
     handleExpandClick = () => {
         this.setState(state => ({ expanded: !state.expanded }));
     };
 
     render() {
-        const { classes } = this.props;
+        const { classes, menu } = this.props;
         const favoriteIcon = this.state.isFavorite ? (
             <FavoriteIcon className={classes.favoriteIcon} />
         ) : (
@@ -111,32 +96,31 @@ class RecipeReviewCard extends React.Component {
         ) : (
             <ShoppingCartEmptyIcon className={classes.shopCartIcon} />
         );
-        const cardContent = this.state.menu ? (
+        const cardContent = menu ? (
             <Aux className={classes.root}>
                 <CardHeader
                     title={
-                        <span className={classes.title}>
-                            {this.state.menu.category}
-                        </span>
+                        <span className={classes.title}>{menu.category}</span>
                     }
-                    subheader={this.state.menu.title}
+                    subheader={menu.title}
                 />
                 <CardMedia
                     className={classes.media}
                     image={
-                        this.state.menu.image ||
+                        menu.image ||
                         "http://mamadips.com/wp-content/uploads/2016/11/defimage.gif"
                     }
                     title="Contemplative Reptile"
                 />
                 <CardContent>
                     <Typography component="p" className={classes.description}>
-                        {this.state.menu.description}
+                        {menu.description}
                     </Typography>
                 </CardContent>
                 <CardActions className={classes.actions} disableActionSpacing>
                     <IconButton
                         aria-label="Add to favorites"
+                        disabled={this.props.isAdmin}
                         onClick={() => {
                             this.props.onMenuSelected();
                         }}
@@ -145,6 +129,7 @@ class RecipeReviewCard extends React.Component {
                     </IconButton>
                     <IconButton
                         aria-label="Add to favorites"
+                        disabled={this.props.isAdmin}
                         onClick={() => {
                             this.onFavoriteButtonClicked();
                         }}
@@ -171,11 +156,17 @@ class RecipeReviewCard extends React.Component {
 
                 <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
                     <CardContent>
-                        {this.state.menu.options ? (
+                        {menu.options ? (
                             <CheckboxList
-                                list={this.state.menu.options}
-                                selectedOptions={this.props.options}
-                                disabled={!this.props.selected}
+                                list={menu.options}
+                                selectedOptions={
+                                    this.props.isAdmin
+                                        ? null
+                                        : this.props.options
+                                }
+                                disabled={
+                                    !this.props.selected || this.props.isAdmin
+                                }
                                 onOptionSelected={item =>
                                     this.props.onMenuDetailSelected(item)
                                 }

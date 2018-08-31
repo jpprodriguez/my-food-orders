@@ -1,6 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { getMenuByIdRef } from "../../../firebase/MenuService";
 import MenuCard from "../common/MenuCard";
 
 class AdminMenuCard extends React.Component {

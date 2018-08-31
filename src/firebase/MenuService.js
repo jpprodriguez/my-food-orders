@@ -1,9 +1,5 @@
 import { getRef } from "./common/utils";
-import {
-    getAllMenusRoute,
-    getAllUsersRoute,
-    getMenuByIdRoute
-} from "./common/routes";
+import { getAllMenusRoute, getMenuByIdRoute } from "./common/routes";
 
 export const getMenuByIdRef = id => {
     return getRef(getMenuByIdRoute(id));

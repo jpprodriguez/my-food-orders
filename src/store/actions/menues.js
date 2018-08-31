@@ -1,8 +1,8 @@
-import { MENUES_UPDATED } from "../actionTypes";
+import { MENUS_UPDATED } from "../actionTypes";
 
-export const menuesUpdated = menues => {
+export const menusUpdated = menus => {
     return {
-        type: MENUES_UPDATED,
-        menues: menues
+        type: MENUS_UPDATED,
+        menus: menus
     };
 };

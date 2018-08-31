@@ -109,7 +109,7 @@ class CustomerMenu extends Component {
                           <MenuPanel
                               key={day}
                               day={day}
-                              menues={this.props.currentMenu[day]}
+                              menus={this.props.currentMenu[day]}
                           />
                       ) : null
               )

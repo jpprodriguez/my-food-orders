@@ -21,14 +21,14 @@ class AdminPanel extends Component {
                 onInit={() => this.getUsers(true)}
             />
         ));
-        const menues = Object.keys(menuCategories).map((key, index) => (
+        const menus = Object.keys(menuCategories).map((key, index) => (
             <MenuPanel
                 key={index}
                 title={menuCategories[key]}
                 category={menuCategories[key]}
             />
         ));
-        const menuPanel = <div>{menues}</div>;
+        const menuPanel = <div>{menus}</div>;
         const ordersPanel = (
             <div>
                 <TabBar items={this.days} content={orders} />

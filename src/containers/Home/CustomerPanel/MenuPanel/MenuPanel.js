@@ -36,12 +36,12 @@ class MenuPanel extends Component {
         const {
             classes,
             order,
-            menues,
+            menus,
             day,
             user,
             updateOrderFromDay
         } = this.props;
-        const menuCards = menues.map(menuId => {
+        const menuCards = menus.map(menuId => {
             const isSelected = order && order.id === menuId;
             return (
                 <div className={classes.menuCard} key={menuId}>

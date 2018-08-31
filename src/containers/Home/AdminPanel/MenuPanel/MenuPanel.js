@@ -3,7 +3,6 @@ import Paper from "@material-ui/core/Paper/Paper";
 import Typography from "@material-ui/core/Typography/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { getMenusByCategory } from "../../../../firebase/MenuService";
-import MenuCard from "../../../../components/MenuCard/common/MenuCard";
 import AdminMenuCard from "../../../../components/MenuCard/AdminMenuCard/AdminMenuCard";
 
 const style = {
@@ -22,26 +21,26 @@ const style = {
 };
 
 class MenuPanel extends Component {
-    menuesRef = null;
+    menusRef = null;
     state = {
-        menues: null
+        menus: null
     };
     componentDidMount() {
-        this.menuesRef = getMenusByCategory(this.props.category);
-        this.menuesRef.on("value", snapshot => {
-            this.setState({ menues: snapshot.val() });
+        this.menusRef = getMenusByCategory(this.props.category);
+        this.menusRef.on("value", snapshot => {
+            this.setState({ menus: snapshot.val() });
         });
     }
     componentWillUnmount() {
-        if (this.menuesRef) {
-            this.menuesRef.off();
+        if (this.menusRef) {
+            this.menusRef.off();
         }
     }
     render() {
         const { classes } = this.props;
-        const menuCards = this.state.menues
-            ? Object.keys(this.state.menues).map(key => (
-                  <AdminMenuCard key={key} menu={this.state.menues[key]} />
+        const menuCards = this.state.menus
+            ? Object.keys(this.state.menus).map(key => (
+                  <AdminMenuCard key={key} menu={this.state.menus[key]} />
               ))
             : null;
         return (

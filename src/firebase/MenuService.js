@@ -1,4 +1,4 @@
-import { getRef, update } from "./common/utils";
+import { getRef, getRefChilds, set, update } from "./common/utils";
 import { getAllMenusRoute, getMenuByIdRoute } from "./common/routes";
 
 export const getMenuByIdRef = id => {
@@ -15,4 +15,15 @@ export const getMenusByCategory = category => {
 export const updateMenuById = (id, changes) => {
     const route = getMenuByIdRoute(id);
     return update(route, changes);
+};
+
+export const createMenu = menuData => {
+    const route = getAllMenusRoute();
+    const newMenuKey = getRefChilds(route).push().key;
+    const newRoute = route + "/" + newMenuKey;
+    return set(newRoute, menuData);
+};
+
+export const deleteMenu = id => {
+    return getMenuByIdRef(id).remove();
 };

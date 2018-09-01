@@ -22,7 +22,11 @@ import green from "@material-ui/core/colors/green";
 import lightBlue from "@material-ui/core/colors/lightBlue";
 import CheckboxList from "../../CheckboxList/CheckboxList";
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
+import Menu from "@material-ui/core/Menu/Menu";
+import MenuItem from "@material-ui/core/MenuItem/MenuItem";
 
 const styles = theme => ({
     root: {},
@@ -32,9 +36,6 @@ const styles = theme => ({
     card: {
         width: 300,
         textAlign: "center"
-    },
-    cardSelected: {
-        boxShadow: "0px 0px 1px 3px #37ca8e"
     },
     media: {
         height: 0,
@@ -83,7 +84,12 @@ const styles = theme => ({
 });
 
 class RecipeReviewCard extends React.Component {
-    state = { expanded: false, isFavorite: false };
+    state = {
+        expanded: false,
+        editOptionsOpen: false,
+        anchorEl: null,
+        isFavorite: false
+    };
 
     handleExpandClick = () => {
         this.setState(state => ({ expanded: !state.expanded }));
@@ -101,6 +107,32 @@ class RecipeReviewCard extends React.Component {
         ) : (
             <ShoppingCartEmptyIcon className={classes.shopCartIcon} />
         );
+        const menuEditOptions = (
+            <Menu
+                id="editOptions"
+                anchorEl={this.state.anchorEl}
+                open={this.state.editOptionsOpen}
+                onClose={() => this.handleMenuEditOptionsClose()}
+            >
+                <MenuItem onClick={() => this.handleEditClick()}>
+                    <EditIcon className={classes.editIcon} />
+                </MenuItem>
+                <MenuItem onClick={() => this.handleDeleteClick()}>
+                    <DeleteIcon color="secondary" />
+                </MenuItem>
+            </Menu>
+        );
+        const cardActionButton = (
+            <IconButton
+                aria-owns={this.state.anchorEl ? "editOptions" : null}
+                aria-haspopup="true"
+                onClick={event => {
+                    this.handleMenuEditOptionsOpen(event);
+                }}
+            >
+                <MoreVertIcon />
+            </IconButton>
+        );
         const cardContent = menu ? (
             <Aux className={classes.root}>
                 <CardHeader
@@ -110,13 +142,10 @@ class RecipeReviewCard extends React.Component {
                     subheader={menu.title}
                     action={
                         isAdmin ? (
-                            <IconButton
-                                onClick={() => {
-                                    this.props.onEditClicked();
-                                }}
-                            >
-                                <EditIcon className={classes.editIcon} />
-                            </IconButton>
+                            <div>
+                                {cardActionButton}
+                                {menuEditOptions}
+                            </div>
                         ) : null
                     }
                 />
@@ -194,6 +223,21 @@ class RecipeReviewCard extends React.Component {
     }
     onFavoriteButtonClicked = () => {
         this.setState(state => ({ isFavorite: !state.isFavorite }));
+    };
+
+    handleMenuEditOptionsClose = () => {
+        this.setState({ editOptionsOpen: false, anchorEl: null });
+    };
+    handleEditClick = () => {
+        this.handleMenuEditOptionsClose();
+        this.props.onEditClicked();
+    };
+    handleDeleteClick = () => {
+        this.handleMenuEditOptionsClose();
+        this.props.onDeleteClicked();
+    };
+    handleMenuEditOptionsOpen = event => {
+        this.setState({ editOptionsOpen: true, anchorEl: event.currentTarget });
     };
 }
 

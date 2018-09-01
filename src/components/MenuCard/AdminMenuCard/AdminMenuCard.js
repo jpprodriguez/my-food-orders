@@ -6,7 +6,7 @@ class AdminMenuCard extends React.Component {
         isModalOpen: false
     };
     render() {
-        const { menu, id, onEditClicked } = this.props;
+        const { menu, id, onEditClicked, onDeleteClicked } = this.props;
         return (
             <MenuCard
                 isAdmin={true}
@@ -16,6 +16,7 @@ class AdminMenuCard extends React.Component {
                 onMenuSelected={null}
                 onMenuDetailSelected={null}
                 onEditClicked={() => onEditClicked(menu, id)}
+                onDeleteClicked={() => onDeleteClicked(id)}
             />
         );
     }

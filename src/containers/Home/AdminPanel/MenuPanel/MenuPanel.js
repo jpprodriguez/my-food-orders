@@ -3,17 +3,21 @@ import Paper from "@material-ui/core/Paper/Paper";
 import Typography from "@material-ui/core/Typography/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import {
-    getMenusByCategory,
-    updateMenuById
+    deleteMenu,
+    getMenusByCategory
 } from "../../../../firebase/MenuService";
 import AdminMenuCard from "../../../../components/MenuCard/AdminMenuCard/AdminMenuCard";
 import Aux from "../../../../hoc/Aux/Aux";
 import MenuEditModal from "../../../../components/MenuEditModal/MenuEditModal";
+import Button from "@material-ui/core/Button/Button";
+import NewMenuCard from "../../../../components/MenuCard/common/NewMenuCard";
+import { MenuOption } from "../../../../firebase/common/models";
+import { SnackbarTypes } from "../../../../components/Snackbar/Snackbars";
+import { toast } from "react-toastify";
+import Snackbar from "../../../../components/Snackbar/Snackbars";
 
 const style = {
     root: {
-        display: "flex",
-        flexWrap: "wrap",
         padding: "24px",
         marginBottom: "64px",
         backgroundColor: "transparent"
@@ -25,6 +29,10 @@ const style = {
     },
     menuCard: {
         margin: "0 16px 16px 0px"
+    },
+    cardsContainer: {
+        display: "flex",
+        flexWrap: "wrap"
     }
 };
 
@@ -57,6 +65,7 @@ class MenuPanel extends Component {
                           onEditClicked={(menu, id) =>
                               this.handleMenuEditClick(menu, id)
                           }
+                          onDeleteClicked={id => this.handleMenuDeleteClick(id)}
                       />
                   </div>
               ))
@@ -71,7 +80,12 @@ class MenuPanel extends Component {
                     >
                         {this.props.title}
                     </Typography>
-                    {menuCards}
+                    <div className={classes.cardsContainer}>
+                        {menuCards}
+                        <NewMenuCard
+                            onAddButtonClicked={this.handleMenuAddClick}
+                        />
+                    </div>
                 </Paper>
                 <MenuEditModal
                     menu={menuToEdit}
@@ -87,6 +101,34 @@ class MenuPanel extends Component {
             menuToEdit: { data: menu, id: id },
             isModalOpen: true
         });
+    };
+    handleMenuAddClick = () => {
+        this.setState({
+            menuToEdit: {
+                data: new MenuOption(this.props.category, "", "", null),
+                id: null
+            },
+            isModalOpen: true
+        });
+    };
+    handleMenuDeleteClick = id => {
+        deleteMenu(id)
+            .then(() => {
+                toast(
+                    <Snackbar
+                        variant={SnackbarTypes.success}
+                        message="Menu successfully deleted"
+                    />
+                );
+            })
+            .catch(err => {
+                toast(
+                    <Snackbar
+                        variant={SnackbarTypes.error}
+                        message={err.message}
+                    />
+                );
+            });
     };
     handleModalClose = () => {
         this.setState({

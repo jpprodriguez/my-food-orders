@@ -5,10 +5,9 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Card from "@material-ui/core/Card/Card";
 import CardContent from "@material-ui/core/CardContent/CardContent";
 import Typography from "@material-ui/core/Typography/Typography";
-import { updateMenuById } from "../../firebase/MenuService";
+import { createMenu, updateMenuById } from "../../firebase/MenuService";
 import { SnackbarTypes } from "../Snackbar/Snackbars";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Snackbar from "../Snackbar/Snackbars";
 
 const styles = {
@@ -65,24 +64,37 @@ const MenuEditModal = props => {
 };
 
 const handleMenuChange = (id, newMenu, onClose) => {
-    updateMenuById(id, newMenu)
-        .then(() => {
-            toast(
-                <Snackbar
-                    variant={SnackbarTypes.success}
-                    message="Menu successfully updated"
-                />
-            );
-        })
-        .catch(err => {
-            toast(
-                <Snackbar variant={SnackbarTypes.error} message={err.message} />
-            );
-        });
+    if (id) {
+        updateMenu(id, newMenu);
+    } else {
+        creatNewMenu(newMenu);
+    }
+
     onClose();
 };
 const handleFormCancel = onClose => {
     onClose();
+};
+const creatNewMenu = newMenu => {
+    createMenu(newMenu)
+        .then(() => {
+            triggerToast(SnackbarTypes.success, "Menu successfully created");
+        })
+        .catch(err => {
+            triggerToast(SnackbarTypes.error, err.message);
+        });
+};
+const updateMenu = (id, newMenu) => {
+    updateMenuById(id, newMenu)
+        .then(() => {
+            triggerToast(SnackbarTypes.success, "Menu successfully updated");
+        })
+        .catch(err => {
+            triggerToast(SnackbarTypes.error, err.message);
+        });
+};
+const triggerToast = (type, text) => {
+    toast(<Snackbar variant={type} message={text} />);
 };
 
 export default withStyles(styles)(MenuEditModal);

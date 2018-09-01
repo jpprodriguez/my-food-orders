@@ -50,12 +50,6 @@ const styles = theme => ({
     },
     menuCard: {
         marginBottom: 8
-    },
-    toast: {
-        background: "transparent",
-        padding: 0,
-        margin: 0,
-        width: "fit-content"
     }
 });
 
@@ -130,12 +124,6 @@ class CustomerMenu extends Component {
                     <Divider />
                 </div>
                 <TabBar items={days} content={menuExpPanels} />
-                <ToastContainer
-                    toastClassName={classes.toast}
-                    hideProgressBar
-                    position={"bottom-left"}
-                    closeButton={false}
-                />
             </div>
         );
     }

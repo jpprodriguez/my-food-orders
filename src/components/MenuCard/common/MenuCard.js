@@ -19,8 +19,10 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Aux from "../../../hoc/Aux/Aux";
 import pink from "@material-ui/core/colors/pink";
 import green from "@material-ui/core/colors/green";
+import lightBlue from "@material-ui/core/colors/lightBlue";
 import CheckboxList from "../../CheckboxList/CheckboxList";
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
+import EditIcon from "@material-ui/icons/Edit";
 
 const styles = theme => ({
     root: {},
@@ -74,6 +76,9 @@ const styles = theme => ({
     },
     shopCartIcon: {
         color: green[500]
+    },
+    editIcon: {
+        color: lightBlue[700]
     }
 });
 
@@ -85,7 +90,7 @@ class RecipeReviewCard extends React.Component {
     };
 
     render() {
-        const { classes, menu } = this.props;
+        const { classes, menu, isAdmin } = this.props;
         const favoriteIcon = this.state.isFavorite ? (
             <FavoriteIcon className={classes.favoriteIcon} />
         ) : (
@@ -103,6 +108,17 @@ class RecipeReviewCard extends React.Component {
                         <span className={classes.title}>{menu.category}</span>
                     }
                     subheader={menu.title}
+                    action={
+                        isAdmin ? (
+                            <IconButton
+                                onClick={() => {
+                                    this.props.onEditClicked();
+                                }}
+                            >
+                                <EditIcon className={classes.editIcon} />
+                            </IconButton>
+                        ) : null
+                    }
                 />
                 <CardMedia
                     className={classes.media}
@@ -120,7 +136,7 @@ class RecipeReviewCard extends React.Component {
                 <CardActions className={classes.actions} disableActionSpacing>
                     <IconButton
                         aria-label="Add to favorites"
-                        disabled={this.props.isAdmin}
+                        disabled={isAdmin}
                         onClick={() => {
                             this.props.onMenuSelected();
                         }}
@@ -129,7 +145,7 @@ class RecipeReviewCard extends React.Component {
                     </IconButton>
                     <IconButton
                         aria-label="Add to favorites"
-                        disabled={this.props.isAdmin}
+                        disabled={isAdmin}
                         onClick={() => {
                             this.onFavoriteButtonClicked();
                         }}
@@ -160,13 +176,9 @@ class RecipeReviewCard extends React.Component {
                             <CheckboxList
                                 list={menu.options}
                                 selectedOptions={
-                                    this.props.isAdmin
-                                        ? null
-                                        : this.props.options
+                                    isAdmin ? null : this.props.options
                                 }
-                                disabled={
-                                    !this.props.selected || this.props.isAdmin
-                                }
+                                disabled={!this.props.selected || isAdmin}
                                 onOptionSelected={item =>
                                     this.props.onMenuDetailSelected(item)
                                 }

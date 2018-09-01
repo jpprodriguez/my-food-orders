@@ -12,6 +12,17 @@ import {
     retrieveUserData
 } from "./store/actions";
 import Home from "./containers/Home/Home";
+import { ToastContainer } from "react-toastify";
+import withStyles from "@material-ui/core/es/styles/withStyles";
+
+const styles = {
+    toast: {
+        background: "transparent",
+        padding: 0,
+        margin: 0,
+        width: "fit-content"
+    }
+};
 
 class App extends Component {
     componentWillMount() {
@@ -51,7 +62,17 @@ class App extends Component {
                 );
             }
         }
-        return <div className="App">{routes}</div>;
+        return (
+            <div className="App">
+                {routes}
+                <ToastContainer
+                    toastClassName={this.props.classes.toast}
+                    hideProgressBar
+                    position={"bottom-left"}
+                    closeButton={false}
+                />
+            </div>
+        );
     }
 }
 const mapDispatchToProps = dispatch => ({
@@ -68,5 +89,5 @@ export default withRouter(
     connect(
         mapStateToProps,
         mapDispatchToProps
-    )(App)
+    )(withStyles(styles)(App))
 );

@@ -2,8 +2,11 @@ import React from "react";
 import MenuCard from "../common/MenuCard";
 
 class AdminMenuCard extends React.Component {
+    state = {
+        isModalOpen: false
+    };
     render() {
-        const { menu } = this.props;
+        const { menu, id, onEditClicked } = this.props;
         return (
             <MenuCard
                 isAdmin={true}
@@ -12,6 +15,7 @@ class AdminMenuCard extends React.Component {
                 options={menu.options}
                 onMenuSelected={null}
                 onMenuDetailSelected={null}
+                onEditClicked={() => onEditClicked(menu, id)}
             />
         );
     }

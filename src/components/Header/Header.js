@@ -49,7 +49,7 @@ function ButtonAppBar(props) {
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
-                    <Hidden mdUp>
+                    <Hidden>
                         <IconButton
                             className={classes.menuButton}
                             color="inherit"
@@ -70,6 +70,18 @@ function ButtonAppBar(props) {
                     >
                         {props.title}
                     </Typography>
+                    <Typography
+                        variant={
+                            isWidthUp("sm", props.width)
+                                ? "title"
+                                : "subheading"
+                        }
+                        color="inherit"
+                        className={classes.flex}
+                    >
+                        {props.sectionTitle}
+                    </Typography>
+
                     <div className={classes.userNameContainer}>{userName}</div>
                     <Hidden smDown>
                         <Button

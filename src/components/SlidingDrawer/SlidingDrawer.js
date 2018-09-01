@@ -14,11 +14,27 @@ const styles = {
 };
 
 const SlidingDrawer = props => {
-    const { classes } = props;
+    const { classes, menuLinks } = props;
+    const items = menuLinks
+        ? menuLinks.map(link => (
+              <ListItem
+                  key={link.value}
+                  button
+                  onClick={() => {
+                      props.onLinkClicked(link.value);
+                      props.onDrawerClose();
+                  }}
+              >
+                  {link.icon}
+                  <ListItemText primary={link.value} />
+              </ListItem>
+          ))
+        : null;
     return (
         <Drawer open={props.isDrawerOpen} onClose={props.onDrawerClose}>
             <div className={classes.drawerListContainer}>
                 <List>
+                    {items}
                     <ListItem button onClick={props.onLogout}>
                         <ListItemIcon>
                             <ExitIcon />

@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Header from "../../components/Header/Header";
-import { logOut } from "../../store/actions";
+import { linkSelected, logOut } from "../../store/actions";
 import SlidingDrawer from "../../components/SlidingDrawer/SlidingDrawer";
 import { userTypes } from "../../firebase/common/models";
 import ProviderPanel from "./ProviderPanel/ProviderPanel";
 import CustomerPanel from "./CustomerPanel/CustomerPanel";
 import AdminPanel from "./AdminPanel/AdminPanel";
+import { MenuLinks } from "../../utils/constants";
 
 class Home extends Component {
     state = {
@@ -30,6 +31,7 @@ class Home extends Component {
             <div>
                 <Header
                     title={"Restaurant Orders"}
+                    sectionTitle={this.props.currentLink}
                     userName={
                         this.props.userData ? this.props.userData.name : null
                     }
@@ -42,6 +44,12 @@ class Home extends Component {
                     onDrawerClose={() => {
                         this.setState({ isDrawerOpen: false });
                     }}
+                    menuLinks={
+                        this.props.userData
+                            ? this.getMenuLinks(this.props.userData.type)
+                            : null
+                    }
+                    onLinkClicked={link => this.handleDrawerLinkClick(link)}
                     onLogout={this.props.onLogout}
                 />
 
@@ -57,15 +65,34 @@ class Home extends Component {
     menuClickHandler = () => {
         this.setState(state => ({ isDrawerOpen: !state.isDrawerOpen }));
     };
+
+    getMenuLinks = userType => {
+        switch (userType) {
+            case userTypes.provider:
+                return null;
+            case userTypes.customer:
+                return null;
+            case userTypes.admin:
+                // return ['Menus', 'Current Menu', 'Orders', 'Users'];
+                return MenuLinks.admin;
+            default:
+                return null;
+        }
+    };
+    handleDrawerLinkClick = link => {
+        this.props.setDrawerLink(link);
+    };
 }
 
 const mapDispatchToProps = dispatch => ({
-    onLogout: () => dispatch(logOut())
+    onLogout: () => dispatch(logOut()),
+    setDrawerLink: link => dispatch(linkSelected(link))
 });
 
 const mapStateToProps = state => ({
     userData: state.userData.userData,
-    userDataLoading: state.userData.loading
+    userDataLoading: state.userData.loading,
+    currentLink: state.drawer.link
 });
 
 export default connect(

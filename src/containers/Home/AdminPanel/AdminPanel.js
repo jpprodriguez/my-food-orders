@@ -8,10 +8,14 @@ import OrdersPanel from "../common/OrdersPanel/OrdersPanel";
 import { connect } from "react-redux";
 import { objectToArray, objectToArrayWithKey } from "../../../utils/utils";
 import { getAllUsers } from "../../../firebase/userService";
-import { setOrders } from "../../../store/actions";
+import { linkSelected, setOrders } from "../../../store/actions";
 import MenuPanel from "./MenuPanel/MenuPanel";
+import { AdminMenuLinks } from "../../../utils/constants";
 
 class AdminPanel extends Component {
+    componentWillMount() {
+        this.props.setDrawerLink(AdminMenuLinks.MENUS);
+    }
     days = daysModel;
     render() {
         const orders = this.days.map(day => (
@@ -37,10 +41,11 @@ class AdminPanel extends Component {
 
         return (
             <div>
-                <TabBar
-                    items={links}
-                    content={[menuPanel, null, ordersPanel, null]}
-                />
+                {this.getSectionByLink(
+                    this.props.activeLink,
+                    menuPanel,
+                    ordersPanel
+                )}
             </div>
         );
     }
@@ -57,17 +62,30 @@ class AdminPanel extends Component {
                 console.log(err);
             });
     }
+    getSectionByLink = (link, menus, orders) => {
+        switch (link) {
+            case AdminMenuLinks.MENUS:
+                return menus;
+            case AdminMenuLinks.ORDERS:
+                return orders;
+            case AdminMenuLinks.USERS:
+                return null;
+            case AdminMenuLinks.CURRENT_MENU:
+                return null;
+            default:
+                return null;
+        }
+    };
 }
 
-const links = ["Menues", "Current Menu", "Orders", "Users"];
-
 const mapStateToProps = state => ({
-    orders: state.orders.allOrders
+    orders: state.orders.allOrders,
+    activeLink: state.drawer.link
 });
 
 const mapDispatchToProps = dispatch => ({
-    setOrders: ordersData => dispatch(setOrders(ordersData))
-    // setUsers: usersData => dispatch(setUsers(usersData))
+    setOrders: ordersData => dispatch(setOrders(ordersData)),
+    setDrawerLink: link => dispatch(linkSelected(link))
 });
 
 export default connect(

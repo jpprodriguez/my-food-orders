@@ -13,7 +13,7 @@ import {
 } from "./store/actions";
 import Home from "./containers/Home/Home";
 import { ToastContainer } from "react-toastify";
-import withStyles from "@material-ui/core/es/styles/withStyles";
+import withStyles from "@material-ui/core/styles/withStyles";
 
 const styles = {
     toast: {

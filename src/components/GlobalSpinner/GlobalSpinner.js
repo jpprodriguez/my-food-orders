@@ -1,6 +1,6 @@
 import React from "react";
-import Backdrop from "@material-ui/core/es/Backdrop/Backdrop";
-import CircularProgress from "@material-ui/core/es/CircularProgress/CircularProgress";
+import Backdrop from "@material-ui/core/Backdrop/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 
 export const GlobalSpinner = props => {
     return (

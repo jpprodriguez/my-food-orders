@@ -1,8 +1,8 @@
 import React from "react";
-import List from "@material-ui/core/es/List/List";
-import ListItem from "@material-ui/core/es/ListItem/ListItem";
-import Checkbox from "@material-ui/core/es/Checkbox/Checkbox";
-import ListItemText from "@material-ui/core/es/ListItemText/ListItemText";
+import List from "@material-ui/core/List/List";
+import ListItem from "@material-ui/core/ListItem/ListItem";
+import Checkbox from "@material-ui/core/Checkbox/Checkbox";
+import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 
 const CheckboxList = props => {
     return (

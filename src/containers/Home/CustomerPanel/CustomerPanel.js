@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Divider from "@material-ui/core/Divider/Divider";
-import Typography from "@material-ui/core/es/Typography/Typography";
+import Typography from "@material-ui/core/Typography/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { connect } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";

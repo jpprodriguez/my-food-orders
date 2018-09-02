@@ -3,7 +3,7 @@ import { days as daysModel } from "../../../firebase/common/models";
 import TabBar from "../../../components/TabBar/TabBar";
 import { connect } from "react-redux";
 import { objectToArrayWithKey } from "../../../utils/utils";
-import withStyles from "@material-ui/core/es/styles/withStyles";
+import withStyles from "@material-ui/core/styles/withStyles";
 import { getAllUsers } from "../../../firebase/userService";
 import OrdersPanel from "../common/OrdersPanel/OrdersPanel";
 import { setOrders } from "../../../store/actions";

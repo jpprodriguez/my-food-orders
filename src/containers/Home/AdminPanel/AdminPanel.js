@@ -6,18 +6,29 @@ import {
 } from "../../../firebase/common/models";
 import OrdersPanel from "../common/OrdersPanel/OrdersPanel";
 import { connect } from "react-redux";
-import { objectToArray, objectToArrayWithKey } from "../../../utils/utils";
+import { objectToArrayWithKey } from "../../../utils/utils";
 import { getAllUsers } from "../../../firebase/userService";
-import { linkSelected, setOrders } from "../../../store/actions";
+import { linkSelected, setOrders, setUsers } from "../../../store/actions";
 import MenuPanel from "./MenuPanel/MenuPanel";
 import { AdminMenuLinks } from "../../../utils/constants";
+import UsersPanel from "./UsersPanel/UsersPanel";
+import withStyles from "@material-ui/core/styles/withStyles";
+
+const styles = {
+    root: {
+        display: "flex",
+        justifyContent: "center",
+        paddingTop: 64
+    }
+};
 
 class AdminPanel extends Component {
     componentWillMount() {
-        this.props.setDrawerLink(AdminMenuLinks.MENUS);
+        this.props.setDrawerLink(AdminMenuLinks.USERS);
     }
     days = daysModel;
     render() {
+        const { classes } = this.props;
         const orders = this.days.map(day => (
             <OrdersPanel
                 orders={this.props.orders}
@@ -38,13 +49,20 @@ class AdminPanel extends Component {
                 <TabBar items={this.days} content={orders} />
             </div>
         );
+        const usersPanel = (
+            <UsersPanel
+                onInit={() => this.getUsers(false)}
+                users={this.props.users}
+            />
+        );
 
         return (
-            <div>
+            <div className={classes.root}>
                 {this.getSectionByLink(
                     this.props.activeLink,
                     menuPanel,
-                    ordersPanel
+                    ordersPanel,
+                    usersPanel
                 )}
             </div>
         );
@@ -55,21 +73,21 @@ class AdminPanel extends Component {
                 if (isForOrders) {
                     this.props.setOrders(objectToArrayWithKey(snapshot.val()));
                 } else {
-                    this.props.setUsers(objectToArray(snapshot.val()));
+                    this.props.setUsers(objectToArrayWithKey(snapshot.val()));
                 }
             })
             .catch(err => {
                 console.log(err);
             });
     }
-    getSectionByLink = (link, menus, orders) => {
+    getSectionByLink = (link, menus, orders, users) => {
         switch (link) {
             case AdminMenuLinks.MENUS:
                 return menus;
             case AdminMenuLinks.ORDERS:
                 return orders;
             case AdminMenuLinks.USERS:
-                return null;
+                return users;
             case AdminMenuLinks.CURRENT_MENU:
                 return null;
             default:
@@ -80,15 +98,17 @@ class AdminPanel extends Component {
 
 const mapStateToProps = state => ({
     orders: state.orders.allOrders,
+    users: state.userData.users,
     activeLink: state.drawer.link
 });
 
 const mapDispatchToProps = dispatch => ({
     setOrders: ordersData => dispatch(setOrders(ordersData)),
+    setUsers: usersData => dispatch(setUsers(usersData)),
     setDrawerLink: link => dispatch(linkSelected(link))
 });
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AdminPanel);
+)(withStyles(styles)(AdminPanel));

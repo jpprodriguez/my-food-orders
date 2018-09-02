@@ -2,7 +2,8 @@ import {
     USER_RETRIEVED,
     USER_RETRIEVE_FAILED,
     RETRIEVING_USER_DATA,
-    USER_LOGGED_OUT
+    USER_LOGGED_OUT,
+    SET_USERS
 } from "../actionTypes";
 import { getUserData } from "../../firebase/userService";
 
@@ -44,5 +45,12 @@ const userDataRetrieveFailed = err => {
     return {
         type: USER_RETRIEVE_FAILED,
         error: err
+    };
+};
+
+export const setUsers = users => {
+    return {
+        type: SET_USERS,
+        users: users
     };
 };

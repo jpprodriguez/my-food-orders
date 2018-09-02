@@ -2,11 +2,13 @@ import {
     USER_RETRIEVED,
     USER_RETRIEVE_FAILED,
     RETRIEVING_USER_DATA,
-    USER_LOGGED_OUT
+    USER_LOGGED_OUT,
+    SET_USERS
 } from "../actionTypes";
 import { updateObject } from "../../utils/utils";
 
 const initialState = {
+    users: null,
     userData: null,
     loading: null,
     retrievalError: null
@@ -27,6 +29,8 @@ const userLoggedOut = state =>
         loading: false,
         retrievalError: null
     });
+const setUsers = (state, action) =>
+    updateObject(state, { users: action.users });
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -38,6 +42,8 @@ const reducer = (state = initialState, action) => {
             return retrievingUserData(state);
         case USER_LOGGED_OUT:
             return userLoggedOut(state);
+        case SET_USERS:
+            return setUsers(state, action);
         default:
             return state;
     }

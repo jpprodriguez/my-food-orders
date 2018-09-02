@@ -49,8 +49,8 @@ class App extends Component {
             if (this.props.user) {
                 routes = (
                     <Switch>
-                        <Route path="/home" component={Home} />
-                        <Redirect to="/home" />
+                        <Route path="/" component={Home} />
+                        <Redirect to="/" />
                     </Switch>
                 );
             } else {

@@ -1,5 +1,4 @@
 import React from "react";
-import Paper from "@material-ui/core/Paper/Paper";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Avatar from "@material-ui/core/Avatar/Avatar";
 import Typography from "@material-ui/core/Typography/Typography";
@@ -54,7 +53,7 @@ const styles = {
 };
 
 const UserCard = props => {
-    const { classes, user } = props;
+    const { classes, user, onEditClick } = props;
     return (
         <div className={classes.root}>
             <div className={classes.nameContainer}>
@@ -88,7 +87,11 @@ const UserCard = props => {
                 </Typography>
             </div>
             <div className={classes.actionsContainer}>
-                <IconButton>
+                <IconButton
+                    onClick={() => {
+                        onEditClick(user);
+                    }}
+                >
                     <EditIcon className={classes.editButton} />
                 </IconButton>
                 <IconButton>

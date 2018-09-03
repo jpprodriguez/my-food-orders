@@ -3,7 +3,7 @@ import Divider from "@material-ui/core/Divider/Divider";
 import Typography from "@material-ui/core/Typography/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { connect } from "react-redux";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
     getCurrentMenuDatesRef,

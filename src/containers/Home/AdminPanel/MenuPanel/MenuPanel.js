@@ -8,8 +8,7 @@ import {
 } from "../../../../firebase/MenuService";
 import AdminMenuCard from "../../../../components/MenuCard/AdminMenuCard/AdminMenuCard";
 import Aux from "../../../../hoc/Aux/Aux";
-import MenuEditModal from "../../../../components/MenuEditModal/MenuEditModal";
-import Button from "@material-ui/core/Button/Button";
+import MenuEditModal from "../../../../components/Modals/MenuEditModal/MenuEditModal";
 import NewMenuCard from "../../../../components/MenuCard/common/NewMenuCard";
 import { MenuOption } from "../../../../firebase/common/models";
 import { SnackbarTypes } from "../../../../components/Snackbar/Snackbars";
@@ -40,7 +39,8 @@ class MenuPanel extends Component {
     menusRef = null;
     state = {
         menus: null,
-        menuToEdit: null
+        menuToEdit: null,
+        isModalOpen: false
     };
     componentDidMount() {
         this.menusRef = getMenusByCategory(this.props.category);

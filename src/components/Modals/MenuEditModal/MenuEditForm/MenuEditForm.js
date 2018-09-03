@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { menuCategories } from "../../../firebase/common/models";
+import { menuCategories } from "../../../../firebase/common/models";
 import MenuItem from "@material-ui/core/MenuItem/MenuItem";
 import Select from "@material-ui/core/Select/Select";
 import InputLabel from "@material-ui/core/InputLabel/InputLabel";
@@ -11,7 +11,7 @@ import IconButton from "@material-ui/core/IconButton/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import Chip from "@material-ui/core/Chip/Chip";
 import Button from "@material-ui/core/Button/Button";
-import { getArrayWithoutItem } from "../../../utils/utils";
+import { getArrayWithoutItem } from "../../../../utils/utils";
 
 const style = {
     root: {

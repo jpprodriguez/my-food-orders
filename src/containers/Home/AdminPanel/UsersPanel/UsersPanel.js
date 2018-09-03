@@ -4,6 +4,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Paper from "@material-ui/core/Paper/Paper";
 import Divider from "@material-ui/core/Divider/Divider";
 import Aux from "../../../../hoc/Aux/Aux";
+import UserEditModal from "../../../../components/Modals/UserEditModal/UserEditModal";
 
 const styles = {
     usersCardsContainer: {
@@ -12,6 +13,10 @@ const styles = {
 };
 
 class UsersPanel extends Component {
+    state = {
+        isModalOpen: false,
+        userToEdit: null
+    };
     componentWillMount() {
         this.props.onInit();
     }
@@ -19,15 +24,36 @@ class UsersPanel extends Component {
         const { users, classes } = this.props;
         const usersCards = users
             ? users.map(user => (
-                  <Aux>
-                      <UserCard key={user.key} user={user} /> <Divider />
+                  <Aux key={user.key}>
+                      <UserCard
+                          user={user}
+                          onEditClick={user => {
+                              this.handleEditClick(user);
+                          }}
+                      />
+                      <Divider />
                   </Aux>
               ))
             : null;
         return (
-            <Paper className={classes.usersCardsContainer}>{usersCards}</Paper>
+            <Aux>
+                <Paper className={classes.usersCardsContainer}>
+                    {usersCards}
+                </Paper>
+                <UserEditModal
+                    open={this.state.isModalOpen}
+                    user={this.state.userToEdit}
+                    onClose={() => this.handleModalClose()}
+                />
+            </Aux>
         );
     }
+    handleEditClick = user => {
+        this.setState({ userToEdit: user, isModalOpen: true });
+    };
+    handleModalClose = () => {
+        this.setState({ userToEdit: null, isModalOpen: false });
+    };
 }
 
 export default withStyles(styles)(UsersPanel);

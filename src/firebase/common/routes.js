@@ -9,6 +9,8 @@ export const getUserRoute = userId => routes.users + "/" + userId;
 
 export const getCurrentMenuRoute = () => routes.currentMenu;
 
+export const getCurrentMenuRouteByDay = day => routes.currentMenu + "/" + day;
+
 export const getCurrentMenuDatesRoute = () => routes.currentMenuDates;
 
 export const getAllMenusRoute = () => routes.allMenus;

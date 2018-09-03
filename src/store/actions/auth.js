@@ -1,4 +1,5 @@
-import firebase from "firebase";
+import firebase from "firebase/app";
+import 'firebase/auth';
 
 import {
     AUTH_FAIL,
@@ -56,6 +57,5 @@ export const logOut = () => dispatch => {
         .then(() => {
             dispatch(userLoggedOut());
             dispatch(loggedOut());
-            console.log("user logged out");
         });
 };

@@ -36,15 +36,17 @@ function SimpleTable(props) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {orders
-                        ? orders.map(user => (
-                              <MenuRow
-                                  key={user.key + day}
-                                  user={user}
-                                  day={day}
-                              />
-                          ))
-                        : null}
+                    {orders ? (
+                        orders.map(user => (
+                            <MenuRow
+                                key={user.key + day}
+                                user={user}
+                                day={day}
+                            />
+                        ))
+                    ) : (
+                        <TableRow />
+                    )}
                 </TableBody>
             </Table>
         </Paper>

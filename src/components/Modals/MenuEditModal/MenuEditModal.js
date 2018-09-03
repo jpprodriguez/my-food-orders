@@ -1,5 +1,5 @@
 import React from "react";
-import MenuEditForm from "./MenuEditForm/MenuEditForm";
+import MenuEditForm from "../../Forms/MenuEditForm/MenuEditForm";
 import { createMenu, updateMenuById } from "../../../firebase/MenuService";
 import { SnackbarTypes } from "../../Snackbar/Snackbars";
 import { toast } from "react-toastify";

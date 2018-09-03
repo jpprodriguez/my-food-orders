@@ -1,4 +1,4 @@
-import firebase from "firebase";
+
 
 export class User {
     constructor(name, fileNumber, type, isVeggie) {
@@ -65,53 +65,53 @@ export const days = Object.freeze([
 //     return currentMenus;
 // };
 
-export const initMenus = () => {
-    let ref = firebase
-        .database()
-        .ref()
-        .child("all_menus");
-    ref.push().set(
-        new MenuOption(
-            menuCategories.menu,
-            "Brochette de pollo",
-            "Brochette de pollo y vegetales marinada, puré de batata.",
-            ["con verdes", "con salsa"]
-        )
-    );
-
-    ref.push().set(
-        new MenuOption(
-            menuCategories.menu,
-            "Guiso de lentejas",
-            "Guiso de lentejas calentito y riquito",
-            ["extra picante"]
-        )
-    );
-
-    ref.push().set(
-        new MenuOption(
-            menuCategories.sandwich,
-            "Chicken Burger",
-            "Chicken burger, lechuga, tomate y queso con papas.",
-            ["sin papas"]
-        )
-    );
-
-    ref.push().set(
-        new MenuOption(
-            menuCategories.salad,
-            "Cesar",
-            "Queso, verdes, cherrys, pollo, croutons y aderezo",
-            ["sin croutons"]
-        )
-    );
-
-    ref.push().set(
-        new MenuOption(
-            menuCategories.pasta,
-            "Pasta",
-            "Una rica y sabrosa pastita",
-            ["con crema"]
-        )
-    );
-};
+// export const initMenus = () => {
+//     let ref = firebase
+//         .database()
+//         .ref()
+//         .child("all_menus");
+//     ref.push().set(
+//         new MenuOption(
+//             menuCategories.menu,
+//             "Brochette de pollo",
+//             "Brochette de pollo y vegetales marinada, puré de batata.",
+//             ["con verdes", "con salsa"]
+//         )
+//     );
+//
+//     ref.push().set(
+//         new MenuOption(
+//             menuCategories.menu,
+//             "Guiso de lentejas",
+//             "Guiso de lentejas calentito y riquito",
+//             ["extra picante"]
+//         )
+//     );
+//
+//     ref.push().set(
+//         new MenuOption(
+//             menuCategories.sandwich,
+//             "Chicken Burger",
+//             "Chicken burger, lechuga, tomate y queso con papas.",
+//             ["sin papas"]
+//         )
+//     );
+//
+//     ref.push().set(
+//         new MenuOption(
+//             menuCategories.salad,
+//             "Cesar",
+//             "Queso, verdes, cherrys, pollo, croutons y aderezo",
+//             ["sin croutons"]
+//         )
+//     );
+//
+//     ref.push().set(
+//         new MenuOption(
+//             menuCategories.pasta,
+//             "Pasta",
+//             "Una rica y sabrosa pastita",
+//             ["con crema"]
+//         )
+//     );
+// };

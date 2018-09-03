@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Route, Switch, withRouter, Redirect } from "react-router-dom";
-import firebase from "firebase";
-
+import firebase from "firebase/app";
+import 'firebase/auth';
 import Login from "./containers/Login/Login";
 import "./App.css";
 import {
@@ -32,11 +32,9 @@ class App extends Component {
     checkAuth = self => {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                console.log("THE USER IS SIGNED IN");
                 self.props.logIn(user);
                 self.props.getUserData(user);
             } else {
-                console.log("THE USER IS SIGNED OFF");
                 self.props.logOut();
             }
             self.props.authChecked();
@@ -49,8 +47,8 @@ class App extends Component {
             if (this.props.user) {
                 routes = (
                     <Switch>
-                        <Route path="/" component={Home} />
-                        <Redirect to="/" />
+                        <Route path="/home" component={Home} />
+                        <Redirect to="/home" />
                     </Switch>
                 );
             } else {

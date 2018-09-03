@@ -28,3 +28,14 @@ export const getArrayWithoutItem = (array, itemToRemove) => {
     }
     return newArray;
 };
+
+export const removeAttributesFromObject = (object, keys) => {
+    const newObject = {};
+    Object.keys(object).map(key => {
+        if (keys.indexOf(key) === -1) {
+            newObject[key] = { ...object[key] };
+        }
+        return null;
+    });
+    return newObject;
+};

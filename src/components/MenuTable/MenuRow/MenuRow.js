@@ -20,7 +20,6 @@ class MenuRow extends Component {
         });
     }
     componentWillUnmount() {
-        console.log("ME voy");
         if (this.userRef) {
             this.userRef.off();
         }

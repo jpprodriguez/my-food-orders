@@ -5,6 +5,11 @@ export const getMenuByIdRef = id => {
     return getRef(getMenuByIdRoute(id));
 };
 
+export const getMenus = () => {
+    const route = getAllMenusRoute();
+    return getRef(route);
+};
+
 export const getMenusByCategory = category => {
     const route = getAllMenusRoute();
     return getRef(route)

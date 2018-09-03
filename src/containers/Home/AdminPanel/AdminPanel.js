@@ -13,6 +13,7 @@ import MenuPanel from "./MenuPanel/MenuPanel";
 import { AdminMenuLinks } from "../../../utils/constants";
 import UsersPanel from "./UsersPanel/UsersPanel";
 import withStyles from "@material-ui/core/styles/withStyles";
+import CurrentMenuPanel from "./CurrentMenuPanel/CurrentMenuPanel";
 
 const styles = {
     root: {
@@ -24,7 +25,7 @@ const styles = {
 
 class AdminPanel extends Component {
     componentWillMount() {
-        this.props.setDrawerLink(AdminMenuLinks.USERS);
+        this.props.setDrawerLink(AdminMenuLinks.MENUS);
     }
     days = daysModel;
     render() {
@@ -55,6 +56,7 @@ class AdminPanel extends Component {
                 users={this.props.users}
             />
         );
+        const currentMenuPanel = <CurrentMenuPanel />;
 
         return (
             <div className={classes.root}>
@@ -62,7 +64,8 @@ class AdminPanel extends Component {
                     this.props.activeLink,
                     menuPanel,
                     ordersPanel,
-                    usersPanel
+                    usersPanel,
+                    currentMenuPanel
                 )}
             </div>
         );
@@ -80,7 +83,7 @@ class AdminPanel extends Component {
                 console.log(err);
             });
     }
-    getSectionByLink = (link, menus, orders, users) => {
+    getSectionByLink = (link, menus, orders, users, currentMenu) => {
         switch (link) {
             case AdminMenuLinks.MENUS:
                 return menus;
@@ -89,7 +92,7 @@ class AdminPanel extends Component {
             case AdminMenuLinks.USERS:
                 return users;
             case AdminMenuLinks.CURRENT_MENU:
-                return null;
+                return currentMenu;
             default:
                 return null;
         }

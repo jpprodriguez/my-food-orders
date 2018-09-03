@@ -37,7 +37,7 @@ export const menuCategories = Object.freeze({
     pasta: "pasta",
     sandwich: "sandwich",
     salad: "salad",
-    vegan: "vegan"
+    veggie: "veggie"
 });
 
 export const userTypes = Object.freeze({

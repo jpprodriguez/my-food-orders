@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Route, Switch, withRouter, Redirect } from "react-router-dom";
 import firebase from "firebase/app";
-import 'firebase/auth';
+import "firebase/auth";
 import Login from "./containers/Login/Login";
 import "./App.css";
 import {
@@ -68,6 +68,7 @@ class App extends Component {
                     hideProgressBar
                     position={"bottom-left"}
                     closeButton={false}
+                    autoClose={1100}
                 />
             </div>
         );

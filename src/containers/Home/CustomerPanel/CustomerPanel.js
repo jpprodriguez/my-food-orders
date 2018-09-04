@@ -19,6 +19,12 @@ import TabBar from "../../../components/TabBar/TabBar";
 import Snackbar, {
     SnackbarTypes
 } from "../../../components/Snackbar/Snackbars";
+import { CustomerMenuLinks } from "../../../utils/constants";
+import { linkSelected } from "../../../store/actions";
+import Aux from "../../../hoc/Aux/Aux";
+import IconButton from "@material-ui/core/es/IconButton/IconButton";
+import ArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
+import ArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
 
 const styles = theme => ({
     root: {
@@ -50,6 +56,10 @@ const styles = theme => ({
     },
     menuCard: {
         marginBottom: 8
+    },
+    datesContainer: {
+        display: "flex",
+        alignItems: "center"
     }
 });
 
@@ -57,6 +67,7 @@ class CustomerMenu extends Component {
     currentMenuRef = null;
     currentMenuDatesRef = null;
     componentWillMount() {
+        this.props.setDrawerLink(CustomerMenuLinks.CURRENT_MENU);
         this.currentMenuRef = getCurrentMenuRef();
         this.currentMenuRef.on("value", snapshot => {
             this.props.menuUpdated(snapshot.val());
@@ -109,13 +120,21 @@ class CustomerMenu extends Component {
               )
             : null;
         const dates = this.props.dates ? (
-            <Typography
-                variant="title"
-                color="inherit"
-                className={classes.title}
-            >
-                {this.parseCurrentMenuDates(this.props.dates)}
-            </Typography>
+            <div className={classes.datesContainer}>
+                <IconButton>
+                    <ArrowLeftIcon />
+                </IconButton>
+                <Typography
+                    variant="headline"
+                    color="inherit"
+                    className={classes.title}
+                >
+                    {this.parseCurrentMenuDates(this.props.dates)}
+                </Typography>
+                <IconButton>
+                    <ArrowRightIcon />
+                </IconButton>
+            </div>
         ) : null;
         return (
             <div className={classes.root}>
@@ -131,7 +150,6 @@ class CustomerMenu extends Component {
     parseCurrentMenuDates(dates) {
         const options = { month: "numeric", day: "numeric" };
         return (
-            "Current Menu: " +
             new Date(dates.startDate).toLocaleDateString(undefined, options) +
             " - " +
             new Date(dates.endDate).toLocaleDateString(undefined, options)
@@ -147,7 +165,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     menuUpdated: newMenu => dispatch(currentMenuUpdated(newMenu)),
-    menuDatesUpdated: newMenu => dispatch(currentMenuDatesUpdated(newMenu))
+    menuDatesUpdated: newMenu => dispatch(currentMenuDatesUpdated(newMenu)),
+    setDrawerLink: link => dispatch(linkSelected(link))
 });
 
 export default connect(

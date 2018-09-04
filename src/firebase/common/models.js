@@ -1,5 +1,3 @@
-
-
 export class User {
     constructor(name, fileNumber, type, isVeggie) {
         this.name = name;

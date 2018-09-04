@@ -1,5 +1,5 @@
 import firebase from "firebase/app";
-import 'firebase/database';
+import "firebase/database";
 
 export const getOnce = route => {
     return firebase

@@ -11,8 +11,8 @@ import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import red from "@material-ui/core/colors/red";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import FavoriteEmptyIcon from "@material-ui/icons/FavoriteBorderOutlined";
+// import FavoriteIcon from "@material-ui/icons/Favorite";
+// import FavoriteEmptyIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import ShoppingCartEmptyIcon from "@material-ui/icons/ShoppingCartOutlined";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -27,6 +27,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Menu from "@material-ui/core/Menu/Menu";
 import MenuItem from "@material-ui/core/MenuItem/MenuItem";
+import RadioButtonList from "../../RadioButtonList/RadioButtonList";
 
 const styles = theme => ({
     root: {},
@@ -36,6 +37,9 @@ const styles = theme => ({
     card: {
         width: 300,
         textAlign: "center"
+    },
+    cardSelected: {
+        boxShadow: "0px 0px 9px 4px rgb(76, 175, 80)"
     },
     media: {
         height: 0,
@@ -97,11 +101,14 @@ class RecipeReviewCard extends React.Component {
 
     render() {
         const { classes, menu, isAdmin } = this.props;
-        const favoriteIcon = this.state.isFavorite ? (
-            <FavoriteIcon className={classes.favoriteIcon} />
-        ) : (
-            <FavoriteEmptyIcon className={classes.favoriteIcon} />
-        );
+        const selectedMenuOption = this.props.options
+            ? this.props.options[0]
+            : null;
+        // const favoriteIcon = this.state.isFavorite ? (
+        //     <FavoriteIcon className={classes.favoriteIcon} />
+        // ) : (
+        //     <FavoriteEmptyIcon className={classes.favoriteIcon} />
+        // );
         const shoppingCartIcon = this.props.selected ? (
             <ShoppingCartIcon className={classes.shopCartIcon} />
         ) : (
@@ -164,7 +171,7 @@ class RecipeReviewCard extends React.Component {
                 </CardContent>
                 <CardActions className={classes.actions} disableActionSpacing>
                     <IconButton
-                        aria-label="Add to favorites"
+                        aria-label="Order"
                         disabled={isAdmin}
                         onClick={() => {
                             this.props.onMenuSelected();
@@ -172,15 +179,15 @@ class RecipeReviewCard extends React.Component {
                     >
                         {shoppingCartIcon}
                     </IconButton>
-                    <IconButton
-                        aria-label="Add to favorites"
-                        disabled={isAdmin}
-                        onClick={() => {
-                            this.onFavoriteButtonClicked();
-                        }}
-                    >
-                        {favoriteIcon}
-                    </IconButton>
+                    {/*<IconButton*/}
+                    {/*aria-label="Add to favorites"*/}
+                    {/*disabled={isAdmin}*/}
+                    {/*onClick={() => {*/}
+                    {/*this.onFavoriteButtonClicked();*/}
+                    {/*}}*/}
+                    {/*>*/}
+                    {/*{favoriteIcon}*/}
+                    {/*</IconButton>*/}
                     <Typography
                         className={classes.expandTitle}
                         color="textSecondary"
@@ -202,28 +209,46 @@ class RecipeReviewCard extends React.Component {
                 <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
                     <CardContent>
                         {menu.options ? (
-                            <CheckboxList
+                            <RadioButtonList
                                 list={menu.options}
-                                selectedOptions={
-                                    isAdmin ? null : this.props.options
+                                selectedOption={
+                                    isAdmin ? null : selectedMenuOption
                                 }
                                 disabled={!this.props.selected || isAdmin}
                                 onOptionSelected={item =>
                                     this.props.onMenuDetailSelected(item)
                                 }
                             />
-                        ) : null}
+                        ) : // <CheckboxList
+                        //     list={menu.options}
+                        //     selectedOptions={
+                        //         isAdmin ? null : this.props.options
+                        //     }
+                        //     disabled={!this.props.selected || isAdmin}
+                        //     onOptionSelected={item =>
+                        //         this.props.onMenuDetailSelected(item)
+                        //     }
+                        // />
+                        null}
                     </CardContent>
                 </Collapse>
             </Aux>
         ) : (
             <CircularProgress className={classes.spinner} size={50} />
         );
-        return <Card className={classes.card}>{cardContent}</Card>;
+        return (
+            <Card
+                className={classnames(classes.card, {
+                    [classes.cardSelected]: this.props.selected
+                })}
+            >
+                {cardContent}
+            </Card>
+        );
     }
-    onFavoriteButtonClicked = () => {
-        this.setState(state => ({ isFavorite: !state.isFavorite }));
-    };
+    // onFavoriteButtonClicked = () => {
+    //     this.setState(state => ({ isFavorite: !state.isFavorite }));
+    // };
 
     handleMenuEditOptionsClose = () => {
         this.setState({ editOptionsOpen: false, anchorEl: null });

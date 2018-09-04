@@ -49,9 +49,9 @@ class MenuPanel extends Component {
                         menuId={menuId}
                         selected={isSelected}
                         options={order && order.options ? order.options : null}
-                        onMenuDetailSelected={item =>
+                        onMenuDetailSelected={event =>
                             handleMenuDetailSelection(
-                                item,
+                                event,
                                 order,
                                 day,
                                 user,
@@ -95,21 +95,24 @@ const handleMenuSelection = (
 };
 
 const handleMenuDetailSelection = (
-    item,
+    event,
     order,
     day,
     user,
     updateOrderFromDay
 ) => {
+    const item = event.target.value;
     let changes;
 
     if (order.options && order.options.indexOf(item) !== -1) {
         changes = {
-            options: getArrayWithoutItem([...order.options], item)
+            // options: getArrayWithoutItem([...order.options], item);
+            options: null
         };
     } else {
         changes = {
-            options: order.options ? [...order.options].concat(item) : [item]
+            // options: order.options ? [...order.options].concat(item) : [item]
+            options: [item]
         };
     }
 

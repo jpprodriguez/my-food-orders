@@ -71,7 +71,7 @@ class Home extends Component {
             case userTypes.provider:
                 return null;
             case userTypes.customer:
-                return null;
+                return MenuLinks.customer;
             case userTypes.admin:
                 // return ['Menus', 'Current Menu', 'Orders', 'Users'];
                 return MenuLinks.admin;

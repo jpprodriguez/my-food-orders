@@ -1,5 +1,9 @@
-import { getOrderByDateRoute, getOrdersRoute } from "./common/routes";
-import { getRef, set, update } from "./common/utils";
+import {
+    getAllOrdersByDateRoute,
+    getOrderByDateRoute,
+    getOrdersRoute
+} from "./common/routes";
+import { getRef, getRefChilds, set, update } from "./common/utils";
 
 export const createOrder = (orderData, user) => {
     const userId = user.uid || null;
@@ -56,4 +60,7 @@ export const getOrderByDayRef = (day, user) => {
     }
 };
 
-export const getAllOrders = day => {};
+export const getAllOrdersByDayRef = day => {
+    const route = getAllOrdersByDateRoute(day);
+    return getRefChilds(route);
+};

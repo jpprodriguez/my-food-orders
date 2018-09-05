@@ -1,12 +1,22 @@
 import React, { Component } from "react";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableCell from "@material-ui/core/TableCell/TableCell";
-import { getOrderByDateRoute } from "../../../firebase/common/routes";
-import { getRef } from "../../../firebase/common/utils";
-import { getMenuByIdRef } from "../../../firebase/MenuService";
+import { getOrderByDateRoute } from "../../../../firebase/common/routes";
+import { getRef } from "../../../../firebase/common/utils";
+import { getMenuByIdRef } from "../../../../firebase/MenuService";
 import { connect } from "react-redux";
-import { updateAllOrders } from "../../../store/actions";
+import { updateAllOrders } from "../../../../store/actions/index";
+import withStyles from "@material-ui/core/styles/withStyles";
 
+const styles = {
+    row: {
+        "& td": {
+            "&:first-letter": {
+                textTransform: "capitalize"
+            }
+        }
+    }
+};
 class MenuRow extends Component {
     userRef = null;
     foodRef = null;
@@ -25,21 +35,20 @@ class MenuRow extends Component {
         }
     }
     render() {
-        const { user } = this.props;
-        const options = user.options
-            ? user.options.map(option => <li key={option}>{option}</li>)
-            : "-";
+        const { user, classes } = this.props;
+        // const options = user.options
+        //     ? user.options.map(option => <li key={option}>{option}</li>)
+        //     : "-";
+        const options = user.options ? user.options[0] : "-";
         return (
-            <TableRow key={user.fileNumber}>
+            <TableRow key={user.fileNumber} className={classes.row}>
                 <TableCell component="th" scope="row">
                     {user.name}
                 </TableCell>
                 <TableCell>{user.fileNumber}</TableCell>
-                <TableCell>{user.food ? user.food : "-"}</TableCell>
                 <TableCell>{user.category ? user.category : "-"}</TableCell>
-                <TableCell>
-                    <ul>{options}</ul>
-                </TableCell>
+                <TableCell>{user.food ? user.food : "-"}</TableCell>
+                <TableCell>{options}</TableCell>
             </TableRow>
         );
     }
@@ -94,4 +103,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(MenuRow);
+)(withStyles(styles)(MenuRow));

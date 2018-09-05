@@ -1,3 +1,5 @@
+import { days as daysModel } from "../firebase/common/models";
+
 export const updateObject = (oldObject, updatedProperties) => ({
     ...oldObject,
     ...updatedProperties
@@ -38,4 +40,21 @@ export const removeAttributesFromObject = (object, keys) => {
         return null;
     });
     return newObject;
+};
+
+export const findIndexOfObjectByValueInArray = (array, attr, value) => {
+    for (let x = 0; x < array.length; x++) {
+        if (array[x][attr] === value) {
+            return x;
+        }
+    }
+    return -1;
+};
+
+export const getCurrentDay = () => {
+    const days = daysModel;
+    const today = new Date();
+    const dayNumber =
+        today.getDay() > 0 && today.getDay() < 6 ? today.getDay() - 1 : 1;
+    return days[dayNumber];
 };

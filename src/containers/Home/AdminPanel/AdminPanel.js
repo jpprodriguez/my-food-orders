@@ -4,9 +4,9 @@ import {
     days as daysModel,
     menuCategories
 } from "../../../firebase/common/models";
-import OrdersPanel from "../common/OrdersPanel/OrdersPanel";
+import OrdersPanel from "./OrdersPanel/OrdersPanel";
 import { connect } from "react-redux";
-import { objectToArrayWithKey } from "../../../utils/utils";
+import { getCurrentDay, objectToArrayWithKey } from "../../../utils/utils";
 import { getAllUsers } from "../../../firebase/userService";
 import { linkSelected, setOrders, setUsers } from "../../../store/actions";
 import MenuPanel from "./MenuPanel/MenuPanel";
@@ -24,6 +24,7 @@ const styles = {
 };
 
 class AdminPanel extends Component {
+    currentDay = getCurrentDay();
     componentWillMount() {
         this.props.setDrawerLink(AdminMenuLinks.MENUS);
     }
@@ -47,7 +48,11 @@ class AdminPanel extends Component {
         const menuPanel = <div>{menus}</div>;
         const ordersPanel = (
             <div>
-                <TabBar items={this.days} content={orders} />
+                <TabBar
+                    items={this.days}
+                    content={orders}
+                    initialTab={this.days.indexOf(this.currentDay)}
+                />
             </div>
         );
         const usersPanel = (

@@ -36,7 +36,8 @@ const styles = theme => ({
     },
     card: {
         width: 300,
-        textAlign: "center"
+        textAlign: "center",
+        transition: "box-shadow 0.3s"
     },
     cardSelected: {
         boxShadow: "0px 0px 9px 4px rgb(76, 175, 80)"
@@ -239,7 +240,7 @@ class RecipeReviewCard extends React.Component {
         return (
             <Card
                 className={classnames(classes.card, {
-                    [classes.cardSelected]: this.props.selected
+                    [classes.cardSelected]: this.props.selected && menu
                 })}
             >
                 {cardContent}

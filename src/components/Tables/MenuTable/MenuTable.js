@@ -14,9 +14,6 @@ const styles = theme => ({
         width: "100%",
         marginTop: theme.spacing.unit * 3,
         overflowX: "auto"
-    },
-    table: {
-        minWidth: 700
     }
 });
 
@@ -25,13 +22,13 @@ function SimpleTable(props) {
 
     return (
         <Paper className={classes.root}>
-            <Table className={classes.table}>
+            <Table>
                 <TableHead>
                     <TableRow>
                         <TableCell>Name</TableCell>
                         <TableCell>File Number</TableCell>
-                        <TableCell>Food</TableCell>
                         <TableCell>Category</TableCell>
+                        <TableCell>Food</TableCell>
                         <TableCell>Options</TableCell>
                     </TableRow>
                 </TableHead>

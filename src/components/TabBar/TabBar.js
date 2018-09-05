@@ -16,7 +16,7 @@ const styles = theme => ({
 
 class TabBar extends React.Component {
     state = {
-        value: 0
+        value: this.props.initialTab || 0
     };
 
     handleChange = (event, value) => {
@@ -37,8 +37,6 @@ class TabBar extends React.Component {
                         onChange={this.handleChange}
                         indicatorColor="primary"
                         textColor="primary"
-                        scrollable
-                        scrollButtons="auto"
                     >
                         {tabs}
                     </Tabs>

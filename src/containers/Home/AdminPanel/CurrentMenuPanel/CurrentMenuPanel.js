@@ -14,7 +14,7 @@ import Snackbar from "../../../../components/Snackbar/Snackbars";
 
 const styles = {
     root: {
-        width: 500
+        maxWidth: 800
     }
 };
 class CurrentMenuPanel extends Component {

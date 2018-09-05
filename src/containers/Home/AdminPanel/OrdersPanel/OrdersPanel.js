@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import MenuTable from "../../../../components/MenuTable/MenuTable";
+import MenuTable from "../../../../components/Tables/MenuTable/MenuTable";
 
 class OrdersPanel extends Component {
     componentWillMount() {

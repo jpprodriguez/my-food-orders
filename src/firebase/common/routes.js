@@ -1,5 +1,7 @@
 export const getOrdersRoute = userId => routes.orders + "/" + userId;
 
+export const getAllOrdersByDateRoute = day => routes.orders + "/" + day;
+
 export const getOrderByDateRoute = (userId, day) =>
     routes.orders + "/" + day + "/" + userId;
 

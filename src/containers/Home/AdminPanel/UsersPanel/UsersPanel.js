@@ -8,7 +8,7 @@ import UserEditModal from "../../../../components/Modals/UserEditModal/UserEditM
 
 const styles = {
     usersCardsContainer: {
-        width: 500
+        width: 700
     }
 };
 

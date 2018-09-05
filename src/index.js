@@ -10,6 +10,8 @@ import firebase from "firebase/app";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import rootReducer from "./store/reducers/index";
+import CssBaseline from "@material-ui/core/CssBaseline/CssBaseline";
+import Aux from "./hoc/Aux/Aux";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

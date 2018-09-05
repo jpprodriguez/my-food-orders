@@ -21,10 +21,10 @@ import Snackbar, {
 } from "../../../components/Snackbar/Snackbars";
 import { CustomerMenuLinks } from "../../../utils/constants";
 import { linkSelected } from "../../../store/actions";
-import Aux from "../../../hoc/Aux/Aux";
-import IconButton from "@material-ui/core/es/IconButton/IconButton";
+import IconButton from "@material-ui/core/IconButton/IconButton";
 import ArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 import ArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
+import { getCurrentDay } from "../../../utils/utils";
 
 const styles = theme => ({
     root: {
@@ -66,6 +66,7 @@ const styles = theme => ({
 class CustomerMenu extends Component {
     currentMenuRef = null;
     currentMenuDatesRef = null;
+    currentDay = getCurrentDay();
     componentWillMount() {
         this.props.setDrawerLink(CustomerMenuLinks.CURRENT_MENU);
         this.currentMenuRef = getCurrentMenuRef();
@@ -142,7 +143,11 @@ class CustomerMenu extends Component {
                     {dates}
                     <Divider />
                 </div>
-                <TabBar items={days} content={menuExpPanels} />
+                <TabBar
+                    items={days}
+                    content={menuExpPanels}
+                    initialTab={days.indexOf(this.currentDay)}
+                />
             </div>
         );
     }

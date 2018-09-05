@@ -15,6 +15,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 const styles = {
     root: {
         display: "flex",
+        alignItems: "center",
+        justifyContent: "space-around",
         padding: "16px"
     },
     nameContainer: {
@@ -42,7 +44,8 @@ const styles = {
         flexGrow: 1
     },
     actionsContainer: {
-        flexGrow: 1
+        flexGrow: 1,
+        textAlign: "right"
     },
     editButton: {
         color: blue[700]

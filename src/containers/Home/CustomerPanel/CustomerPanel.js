@@ -20,11 +20,12 @@ import Snackbar, {
     SnackbarTypes
 } from "../../../components/Snackbar/Snackbars";
 import { CustomerMenuLinks } from "../../../utils/constants";
-import { linkSelected } from "../../../store/actions";
+import { linkSelected, setOrderEditPermission } from "../../../store/actions";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import ArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 import ArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
 import { getCurrentDay } from "../../../utils/utils";
+import { getOrderEditPermisssionRef } from "../../../firebase/permissionsService";
 
 const styles = theme => ({
     root: {
@@ -66,6 +67,7 @@ const styles = theme => ({
 class CustomerMenu extends Component {
     currentMenuRef = null;
     currentMenuDatesRef = null;
+    orderEditPermissionRef = null;
     currentDay = getCurrentDay();
     componentWillMount() {
         this.props.setDrawerLink(CustomerMenuLinks.CURRENT_MENU);
@@ -76,6 +78,10 @@ class CustomerMenu extends Component {
         this.currentMenuDatesRef = getCurrentMenuDatesRef();
         this.currentMenuDatesRef.on("value", snapshot => {
             this.props.menuDatesUpdated(snapshot.val());
+        });
+        this.orderEditPermissionRef = getOrderEditPermisssionRef();
+        this.orderEditPermissionRef.on("value", snapshot => {
+            this.props.setOrderEditPermission(snapshot.val());
         });
     }
     componentWillUnmount() {
@@ -171,7 +177,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     menuUpdated: newMenu => dispatch(currentMenuUpdated(newMenu)),
     menuDatesUpdated: newMenu => dispatch(currentMenuDatesUpdated(newMenu)),
-    setDrawerLink: link => dispatch(linkSelected(link))
+    setDrawerLink: link => dispatch(linkSelected(link)),
+    setOrderEditPermission: value => dispatch(setOrderEditPermission(value))
 });
 
 export default connect(

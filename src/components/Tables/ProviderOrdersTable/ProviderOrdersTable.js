@@ -18,7 +18,7 @@ const styles = {
     },
     table: {
         "& th": {
-            width: "33.3%"
+            width: "28%"
         },
         "& td": {
             "&:first-letter": {
@@ -81,9 +81,9 @@ const ProviderOrdersTable = props => {
 const parseNumbers = numberArray => {
     let numberString = "";
     for (let number of numberArray) {
-        numberString += number + ",";
+        numberString += number + ", ";
     }
-    return numberString.slice(0, -1);
+    return numberString.slice(0, -2);
 };
 const getTotalOrders = orders => {
     let total = 0;

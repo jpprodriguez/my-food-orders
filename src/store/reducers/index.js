@@ -5,6 +5,7 @@ import userReducer from "./users";
 import currentMenuReducer from "./currentMenu";
 import menuReducer from "./menus";
 import drawerReducer from "./drawer";
+import permissionReducer from "./permissions";
 
 const rootReducer = combineReducers({
     auth: authReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     userData: userReducer,
     currentMenu: currentMenuReducer,
     menus: menuReducer,
-    drawer: drawerReducer
+    drawer: drawerReducer,
+    permissions: permissionReducer
 });
 
 export default rootReducer;

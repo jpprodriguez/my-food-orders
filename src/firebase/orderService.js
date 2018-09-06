@@ -1,6 +1,7 @@
 import {
     getAllOrdersByDateRoute,
     getOrderByDateRoute,
+    getOrdersEditionRoute,
     getOrdersRoute
 } from "./common/routes";
 import { getRef, getRefChilds, set, update } from "./common/utils";

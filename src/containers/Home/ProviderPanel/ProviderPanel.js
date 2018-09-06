@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { days as daysModel } from "../../../firebase/common/models";
 import {
     findIndexOfObjectByValueInArray,
     getCurrentDay
@@ -9,6 +8,9 @@ import { getAllUsers } from "../../../firebase/userService";
 import { getMenus } from "../../../firebase/MenuService";
 import { getAllOrdersByDayRef } from "../../../firebase/orderService";
 import ProviderOrdersTable from "../../../components/Tables/ProviderOrdersTable/ProviderOrdersTable";
+import { ProviderMenuLinks } from "../../../utils/constants";
+import { linkSelected } from "../../../store/actions";
+import { connect } from "react-redux";
 
 const styles = {
     root: {
@@ -16,7 +18,7 @@ const styles = {
         margin: "auto",
         paddingTop: 48
     },
-    hola: {
+    tableContainer: {
         marginBottom: 16
     }
 };
@@ -29,6 +31,9 @@ class ProviderMenu extends Component {
     state = {
         orders: null
     };
+    componentWillMount() {
+        this.props.setDrawerLink(ProviderMenuLinks.ORDERS);
+    }
     componentDidMount() {
         this.currentDay = getCurrentDay();
         getMenus().once("value", snapshot => {
@@ -57,7 +62,10 @@ class ProviderMenu extends Component {
         const { classes } = this.props;
         const orderTables = this.state.orders
             ? this.state.orders.map(orderData => (
-                  <div key={orderData.category} className={classes.hola}>
+                  <div
+                      key={orderData.category}
+                      className={classes.tableContainer}
+                  >
                       <ProviderOrdersTable
                           category={orderData.category}
                           orders={orderData.orders}
@@ -67,13 +75,6 @@ class ProviderMenu extends Component {
             : null;
         return <div className={classes.root}>{orderTables}</div>;
     }
-    getCurrentDay = () => {
-        const days = daysModel;
-        const today = new Date();
-        const dayNumber =
-            today.getDay() > 0 && today.getDay() < 6 ? today.getDay() - 1 : 1;
-        return days[dayNumber];
-    };
     parseOrdersData = orders => {
         const ordersData = [];
         for (let userId of Object.keys(orders)) {
@@ -113,4 +114,11 @@ class ProviderMenu extends Component {
     };
 }
 
-export default withStyles(styles)(ProviderMenu);
+const mapDispatchToProps = dispatch => ({
+    setDrawerLink: link => dispatch(linkSelected(link))
+});
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(withStyles(styles)(ProviderMenu));

@@ -14,6 +14,12 @@ import { AdminMenuLinks } from "../../../utils/constants";
 import UsersPanel from "./UsersPanel/UsersPanel";
 import withStyles from "@material-ui/core/styles/withStyles";
 import CurrentMenuPanel from "./CurrentMenuPanel/CurrentMenuPanel";
+import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
+import Switch from "@material-ui/core/Switch/Switch";
+import {
+    getOrderEditPermisssionRef,
+    updateOrderEditPermission
+} from "../../../firebase/permissionsService";
 
 const styles = {
     root: {
@@ -25,8 +31,23 @@ const styles = {
 
 class AdminPanel extends Component {
     currentDay = getCurrentDay();
+    orderEditionRef = null;
+    state = {
+        orderEdition: null
+    };
     componentWillMount() {
         this.props.setDrawerLink(AdminMenuLinks.MENUS);
+    }
+    componentDidMount() {
+        this.orderEditionRef = getOrderEditPermisssionRef();
+        this.orderEditionRef.on("value", snapshot => {
+            this.setState({ orderEdition: snapshot.val() });
+        });
+    }
+    componentWillUnmount() {
+        if (this.orderEditionRef) {
+            this.orderEditionRef.off();
+        }
     }
     days = daysModel;
     render() {
@@ -46,6 +67,19 @@ class AdminPanel extends Component {
             />
         ));
         const menuPanel = <div>{menus}</div>;
+        const orderEditionSwitch =
+            typeof this.state.orderEdition === "boolean" ? (
+                <FormControlLabel
+                    control={
+                        <Switch
+                            checked={this.state.orderEdition}
+                            onChange={() => this.handleOrderEditChange()}
+                            color="primary"
+                        />
+                    }
+                    label="Customers Order Edition"
+                />
+            ) : null;
         const ordersPanel = (
             <div>
                 <TabBar
@@ -53,6 +87,7 @@ class AdminPanel extends Component {
                     content={orders}
                     initialTab={this.days.indexOf(this.currentDay)}
                 />
+                {orderEditionSwitch}
             </div>
         );
         const usersPanel = (
@@ -75,6 +110,9 @@ class AdminPanel extends Component {
             </div>
         );
     }
+    handleOrderEditChange = () => {
+        updateOrderEditPermission(!this.state.orderEdition);
+    };
     getUsers(isForOrders) {
         getAllUsers()
             .then(snapshot => {

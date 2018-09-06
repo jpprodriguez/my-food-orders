@@ -17,6 +17,7 @@ class AdminMenuCard extends React.Component {
                 onMenuDetailSelected={null}
                 onEditClicked={() => onEditClicked(menu, id)}
                 onDeleteClicked={() => onDeleteClicked(id)}
+                disabled={true}
             />
         );
     }

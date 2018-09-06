@@ -52,6 +52,10 @@ export const days = Object.freeze([
     "friday"
 ]);
 
+export const permissions = Object.freeze({
+    orderEdit: "order_edit"
+});
+
 // export const initCurrentMenus = () => {
 //     let currentMenus = {};
 //     for(let day of Object.keys(days)) {

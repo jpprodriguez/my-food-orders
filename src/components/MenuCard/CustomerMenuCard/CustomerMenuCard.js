@@ -1,6 +1,7 @@
 import React from "react";
 import { getMenuByIdRef } from "../../../firebase/MenuService";
 import MenuCard from "../common/MenuCard";
+import { connect } from "react-redux";
 
 class CustomerMenuCard extends React.Component {
     state = { menu: null };
@@ -29,9 +30,14 @@ class CustomerMenuCard extends React.Component {
                 onMenuDetailSelected={item =>
                     this.props.onMenuDetailSelected(item)
                 }
+                disabled={!this.props.orderEditPermission}
             />
         );
     }
 }
 
-export default CustomerMenuCard;
+const mapStateToProps = state => ({
+    orderEditPermission: state.permissions.orderEdit
+});
+
+export default connect(mapStateToProps)(CustomerMenuCard);

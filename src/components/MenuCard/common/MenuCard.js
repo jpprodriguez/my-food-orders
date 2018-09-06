@@ -20,6 +20,7 @@ import Aux from "../../../hoc/Aux/Aux";
 import pink from "@material-ui/core/colors/pink";
 import green from "@material-ui/core/colors/green";
 import lightBlue from "@material-ui/core/colors/lightBlue";
+import grey from "@material-ui/core/colors/grey";
 import CheckboxList from "../../CheckboxList/CheckboxList";
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
@@ -74,14 +75,14 @@ const styles = theme => ({
     title: {
         textTransform: "capitalize"
     },
-    avatar: {
-        backgroundColor: red[500]
-    },
     favoriteIcon: {
         color: pink[200]
     },
     shopCartIcon: {
         color: green[500]
+    },
+    disabledIcon: {
+        color: grey[200]
     },
     editIcon: {
         color: lightBlue[700]
@@ -101,7 +102,7 @@ class RecipeReviewCard extends React.Component {
     };
 
     render() {
-        const { classes, menu, isAdmin } = this.props;
+        const { classes, menu, isAdmin, disabled } = this.props;
         const selectedMenuOption = this.props.options
             ? this.props.options[0]
             : null;
@@ -111,9 +112,17 @@ class RecipeReviewCard extends React.Component {
         //     <FavoriteEmptyIcon className={classes.favoriteIcon} />
         // );
         const shoppingCartIcon = this.props.selected ? (
-            <ShoppingCartIcon className={classes.shopCartIcon} />
+            <ShoppingCartIcon
+                className={classnames(classes.shopCartIcon, {
+                    [classes.disabledIcon]: disabled
+                })}
+            />
         ) : (
-            <ShoppingCartEmptyIcon className={classes.shopCartIcon} />
+            <ShoppingCartEmptyIcon
+                className={classnames(classes.shopCartIcon, {
+                    [classes.disabledIcon]: disabled
+                })}
+            />
         );
         const menuEditOptions = (
             <Menu
@@ -173,7 +182,7 @@ class RecipeReviewCard extends React.Component {
                 <CardActions className={classes.actions} disableActionSpacing>
                     <IconButton
                         aria-label="Order"
-                        disabled={isAdmin}
+                        disabled={isAdmin || disabled}
                         onClick={() => {
                             this.props.onMenuSelected();
                         }}
@@ -215,7 +224,9 @@ class RecipeReviewCard extends React.Component {
                                 selectedOption={
                                     isAdmin ? null : selectedMenuOption
                                 }
-                                disabled={!this.props.selected || isAdmin}
+                                disabled={
+                                    !this.props.selected || isAdmin || disabled
+                                }
                                 onOptionSelected={item =>
                                     this.props.onMenuDetailSelected(item)
                                 }

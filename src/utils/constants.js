@@ -16,6 +16,10 @@ export const CustomerMenuLinks = Object.freeze({
     CURRENT_MENU: "Current Menu"
 });
 
+export const ProviderMenuLinks = Object.freeze({
+    ORDERS: "Orders"
+});
+
 export const MenuLinks = {
     admin: [
         {
@@ -57,6 +61,16 @@ export const MenuLinks = {
             icon: (
                 <ListItemIcon>
                     <CalendarIcon />
+                </ListItemIcon>
+            )
+        }
+    ],
+    provider: [
+        {
+            value: ProviderMenuLinks.ORDERS,
+            icon: (
+                <ListItemIcon>
+                    <ViewListIcon />
                 </ListItemIcon>
             )
         }

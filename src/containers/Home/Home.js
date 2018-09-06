@@ -69,11 +69,10 @@ class Home extends Component {
     getMenuLinks = userType => {
         switch (userType) {
             case userTypes.provider:
-                return null;
+                return MenuLinks.provider;
             case userTypes.customer:
                 return MenuLinks.customer;
             case userTypes.admin:
-                // return ['Menus', 'Current Menu', 'Orders', 'Users'];
                 return MenuLinks.admin;
             default:
                 return null;

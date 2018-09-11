@@ -21,6 +21,7 @@ const store = createStore(
 );
 
 const firebaseConfig = {
+    //This is a dummy firebase database. Put the information of your own database here
     apiKey: "AIzaSyAT4_fAmG0Htd-94dm7uY0lQ4MHS_0nqBA",
     authDomain: "solstice-food-delivery.firebaseapp.com",
     databaseURL: "https://solstice-food-delivery.firebaseio.com",
